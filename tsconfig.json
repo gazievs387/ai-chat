@@ -7,8 +7,15 @@
         "jsx": "react",
         "allowJs": true,
         "moduleResolution": "node",
+        "isolatedModules": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "strict": true
+    },
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
     }
 }

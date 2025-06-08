@@ -1,12 +1,12 @@
 import React from 'react';
-import "./index.css"
+import styles from "./index.module.scss"
 import GPT4Image from "./static/gpt4.png"
 
 
 function App() {
     return (
         <main>
-            <h1>11111111 One</h1>
+            <h1>AI Chat</h1>
 
             <img src={GPT4Image} />
         </main>
