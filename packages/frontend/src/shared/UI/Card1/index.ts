@@ -1,0 +1,1 @@
+export { Card1 } from "./components/Card1"

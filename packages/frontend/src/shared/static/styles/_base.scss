@@ -1,0 +1,66 @@
+@use "sass:map";
+
+
+
+
+$blue-main: #304ffe;
+$blue-a100: #c2caff;
+$light-main-text-contrast: rgb(248, 250, 252);
+$dark-main-text-contrast: rgb(15 23 42);
+
+$light-text-black: rgb(2, 8, 23);
+$light-text-gray: rgb(100, 116, 139);
+$light-bg-white: rgb(255, 255, 255);
+$light-bg-gray: rgb(241, 245, 249);
+$light-gray-a100: rgb(226, 232, 240);
+
+$dark-text-color-main: rgb(255, 255, 255);
+$dark-text-gray: rgb(148, 163, 184);
+$dark-bg-color-main: rgb(2, 8, 23);
+$dark-bg-gray: rgb(30, 41, 59);
+$dark-gray-a100: rgb(30, 41, 59);
+
+
+
+$themes: (
+  dark: (
+    'text-color': $dark-text-color-main,
+    'bg-color': $dark-bg-color-main,
+    'text-gray': $dark-text-gray,
+    'gray-a100': $dark-gray-a100
+  ),
+  light: (
+    'text-color': $light-text-black,
+    'bg-color': $light-bg-white,
+    'text-gray': $light-text-gray,
+    'gray-a100': $light-gray-a100
+  )
+);
+
+
+$theme-map: null;
+
+
+
+@mixin theme() {
+  @each $theme, $map in $themes {
+    // $theme: darkTheme, lightTheme
+    // $map: ('text-color': ..., 'bg-color': ...)
+
+    // make the $map globally accessible, so that theme-get() can access it
+    $theme-map: $map !global;
+
+    // make a class for each theme using interpolation -> #{}
+    // use & for making the theme class ancestor of the class
+    // from which you use @include theme() {...}
+    :global(.#{$theme}) & {
+      @content;    // the content inside @include theme() {...}
+    }
+  }
+  // no use of the variable $theme-map now
+  $theme-map: null !global;
+}
+
+@function theme-get($key) {
+    @return map.get($theme-map, $key);
+}

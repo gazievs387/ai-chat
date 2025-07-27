@@ -1,0 +1,26 @@
+
+
+
+
+
+.social_icons {
+    @include theme() {
+        color: theme-get("text-gray");
+        cursor: pointer;
+
+        &:hover {
+            color: theme-get("text-color");
+
+        }
+    }
+    
+}
+
+.privacy_and_terms {
+    cursor: pointer;
+    text-underline-offset: 4px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

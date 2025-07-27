@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react-jsx",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "isolatedModules": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+        "strict": true,
+        "baseUrl": "./src"
+    },
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+
+    "include": [
+        "./**/*",
+        "src/shared/types/**/*.d.ts" 
+    ],
+
+    "exclude": [
+        "./build/**/*"
+    ]
+}

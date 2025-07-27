@@ -1,0 +1,1 @@
+export { ChatMini } from "./components/ChatMini"

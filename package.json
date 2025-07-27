@@ -1,42 +1,18 @@
 {
-  "name": "ai_chat",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "webpack serve --open",
-    "build": "webpack --env prod",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@types/react": "^19.1.6",
-    "@types/react-dom": "^19.1.6",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.27.2",
-    "@babel/core": "^7.27.4",
-    "@babel/preset-env": "^7.27.2",
-    "@babel/preset-react": "^7.27.1",
-    "@types/mini-css-extract-plugin": "^2.5.0",
-    "@types/node": "^22.15.30",
-    "@types/webpack": "^5.28.5",
-    "babel-loader": "^10.0.0",
-    "cross-env": "^7.0.3",
-    "css-loader": "^7.1.2",
-    "html-webpack-plugin": "^5.6.3",
-    "mini-css-extract-plugin": "^2.9.2",
-    "sass": "^1.89.1",
-    "sass-loader": "^16.0.5",
-    "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
-  }
+    "name": "ai_chat",
+    "version": "1.0.0",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "npm run start -w ai_chat_frontend"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+
+    }
 }

@@ -1,0 +1,126 @@
+
+
+
+.navbar {
+    display: flex;
+    position: sticky;
+    top: 0px;
+    min-height: 60px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6%;
+    z-index: 2;
+
+    @include theme() {
+        background-color: theme-get("bg-color");
+        border-bottom: 1px solid theme-get("gray-a100");
+    }
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+
+.logo_wrap {
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 1024px) {
+        justify-content: space-between;
+        width: 100%;
+    
+    }
+
+    &--icon {
+        width: 40px;
+    }
+}
+
+
+.navbar_items {
+    display: flex;
+    align-items: center;
+
+
+    @media (max-width: 1024px) {
+        flex-direction: column;
+    }
+
+    @include theme() {
+        background-color: theme-get("bg-color");
+    }
+
+    &--mobile {
+        width: calc(100% - 40px);
+        position: absolute;
+        top: 60px;
+        left: 0px;
+        right: 0px;
+        padding: 20px;
+
+        @include theme() {
+            border-bottom: 1px solid theme-get("gray-a100");
+        }
+
+    }
+    
+    
+    > .el {
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        padding-top: 2px;
+        margin: 0 20px;
+
+        @media (max-width: 1024px) {
+            font-size: 17px;
+            margin-block: 10px;
+        }
+
+        &:hover {
+            text-underline-offset: 4px;
+            text-decoration: underline;
+        }
+    }
+}
+
+
+.theme_btn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 8px;
+    padding-top: 10px;
+
+    @media (max-width: 1024px) {
+        margin-bottom: 10px;
+    }
+
+    &--light {
+        &:hover {
+            background-color: rgb(235, 240, 244);
+        }
+    }
+
+    &--dark {
+        &:hover {
+            background-color: rgb(30, 41, 59);
+        }
+    }
+
+    & > span {
+        display: none;
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 10px;
+
+
+        @media (max-width: 1024px) {
+            display: block;
+            // font-size: 17px;
+        }
+    }
+}
