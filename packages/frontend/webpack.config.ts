@@ -5,6 +5,8 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import "webpack-dev-server"
+import ReactRefreshTypeScript from "react-refresh-typescript"
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 
 
 function getPath(...paths: string[]): string {
@@ -17,21 +19,41 @@ function getWebpackConfig(env: any): Configuration {
     const isDev = !isProd
 
 
+    const plugins: Configuration["plugins"] = [
+        new HtmlWebpackPlugin({template: getPath("public", "index.html")}),
+        new ForkTsCheckerWebpackPlugin(),
+    ]
+
+    if (isProd) {
+        plugins.push(new MiniCssExtractPlugin())
+    } else {
+        plugins.push(new ReactRefreshWebpackPlugin())
+    }
+
     return {
         mode: isProd ? "production" : "development",
         entry: getPath("src", "index.tsx"),
         output: {
             filename: "index.js",
             path: getPath("build"),
-            clean: true
+            clean: true,
+            publicPath: "/"
         },
         devtool: isDev && "eval-cheap-source-map",
         module: {
             rules: [
                 {
                     test: /\.tsx?$/,
-                    use: 'ts-loader',
                     exclude: /node_modules/,
+                    use: {
+                        loader: require.resolve("ts-loader"),
+                        options: {
+                            getCustomTransformers: () => ({
+                                before: [isDev && ReactRefreshTypeScript()].filter(Boolean),
+                            }),
+
+                        },
+                    }
                 },
                 {
                     test: /\.((c|sa|sc)ss)$/i,
@@ -67,15 +89,14 @@ function getWebpackConfig(env: any): Configuration {
                 },
             ]
         },
-        plugins: [
-            new HtmlWebpackPlugin({template: getPath("public", "index.html")}),
-            new ForkTsCheckerWebpackPlugin(),
-            isProd && new MiniCssExtractPlugin()
-        ],
+        plugins: plugins,
         devServer: {
             port: 3000,
-            static: ["src", "public"],
+            static: {
+                directory: getPath("public")
+            },
             historyApiFallback: true,
+            hot: true
         },
         resolve: {
             extensions: [".tsx", ".ts", ".js", ".jsx", ".scss"],
