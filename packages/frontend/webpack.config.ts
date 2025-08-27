@@ -56,7 +56,7 @@ function getWebpackConfig(env: any): Configuration {
                     }
                 },
                 {
-                    test: /\.((c|sa|sc)ss)$/i,
+                    test: /\.module\.((c|sa|sc)ss)$/i,
                     use: [
                         isProd ? MiniCssExtractPlugin.loader : "style-loader",
                         { 
@@ -67,6 +67,24 @@ function getWebpackConfig(env: any): Configuration {
                                     exportLocalsConvention: "as-is"
                                 }
                             }
+                        },
+                        { 
+                            loader: "sass-loader",
+                            options: {
+                                additionalData: '@use "shared/static/styles/base" as *;',
+                                sassOptions: {
+                                    loadPaths: [getPath("src")]
+                                }
+                            },
+                        }
+                    ]
+                },
+                {
+                    test: /(?<!\.module)\.((c|sa|sc)ss)$/i,
+                    use: [
+                        isProd ? MiniCssExtractPlugin.loader : "style-loader",
+                        { 
+                            loader: "css-loader",
                         },
                         { 
                             loader: "sass-loader",
