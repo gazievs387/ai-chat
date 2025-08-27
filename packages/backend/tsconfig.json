@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "esnext", // Specifies the ECMAScript target version for the output JavaScript.
+        "module": "commonjs", // Specifies the module system for the output JavaScript (e.g., CommonJS for Node.js).
+        "outDir": "./dist", // Specifies the output directory for compiled JavaScript files.
+        "rootDir": ".", // Specifies the root directory of TypeScript source files.
+        "strict": true, // Enables a set of strict type-checking options.
+        "isolatedModules": true,
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "esModuleInterop": true, // Enables compatibility with CommonJS modules when importing ES modules.
+        "skipLibCheck": true, // Skips type checking of declaration files.
+    },
+
+    "include": ["./**/*"], // Specifies which files TypeScript should include in the compilation
+}
