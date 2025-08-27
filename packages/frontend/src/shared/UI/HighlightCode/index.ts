@@ -1,0 +1,1 @@
+export { HighlightCode } from "./components/HighlightCode"

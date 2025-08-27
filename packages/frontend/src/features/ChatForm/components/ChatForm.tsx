@@ -3,24 +3,19 @@ import { useState } from 'react';
 import { LuSendHorizontal } from 'react-icons/lu';
 import { MdOutlineAttachFile } from 'react-icons/md';
 import { useChatMessages } from 'shared/model/chatMessages';
-import { MessageType } from 'shared/types/messages';
 
 
 export function ChatForm() {
-    const { messages, setMessages } = useChatMessages() 
+    const { sendMessage, error, loading } = useChatMessages() 
     const [text, setText] = useState("")
     const theme = useTheme() 
 
 
     function handleMessage() {
-        if (text.trim()) {
-            const newMessage: MessageType = {
-                id: Math.random() * 1000000,
-                type: "user",
-                text: text
-            }
+        if (error || loading) return 
 
-            setMessages([...messages, newMessage])
+        if (text.trim()) {
+            sendMessage(text)
 
             setText("")
         }

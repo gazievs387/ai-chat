@@ -1,0 +1,41 @@
+
+
+
+.markdown {
+    white-space: initial;
+
+    p {
+        margin-top: 8px;
+        margin-bottom: 4px;
+    }
+
+    h1, h2, h3 {
+        margin: 16px 0px 8px;
+    }
+
+    hr {
+        margin: 12px 0;
+    }
+
+    strong {
+        font-weight: 600;
+    }
+
+    ol, ul {
+        padding-left: 25px;
+        margin: 0px 0px 8px;
+
+    }
+
+    pre {
+        max-width: 100%;
+        overflow-x: auto; // включаем горизонтальный скролл
+        white-space: pre; // сохраняем переносы, но без wrap
+    }
+      
+    code {
+        white-space: pre-wrap;  // перенос строк внутри inline-кода
+        word-break: break-word; // переносим слова при необходимости
+    }
+
+}
