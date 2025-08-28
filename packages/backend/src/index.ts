@@ -48,6 +48,11 @@ app.post('/send-message', async (req, res, next) => {
                         message: "The model is temporarily unavailable. Please try again later.",
                         code: "MODEL_UNAVAILABLE"
                     });
+                case 500:
+                    return res.status(503).json({
+                        message: "The model is temporarily unavailable. Please try again later.",
+                        code: "MODEL_UNAVAILABLE"
+                    });
                 default:
                     return res.status(status || 500).json({
                         message: "An API error occurred.",
