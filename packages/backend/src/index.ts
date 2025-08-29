@@ -1,8 +1,9 @@
-import express from "express"
+import express, { Request } from "express"
 import cors from "cors"
-import { GoogleGenAI } from "@google/genai";
+import { CreateChatParameters, GoogleGenAI } from "@google/genai";
 import { config } from "dotenv";
 import { isApiError } from "./types/utils";
+import { MessageType } from "@ai_chat/types";
 
 
 config({quiet: true}) 
@@ -19,18 +20,27 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/send-message', async (req, res, next) => {
+app.post('/send-message', async (req: Request<any, any, {message: string, prevMessages: MessageType[]}>, res, next) => {
     try {
-        const ai = new GoogleGenAI({});
-        const result = await ai.models.generateContent({
-            model: "gemini-2.5-pro",
-            contents: req.body.message
-        });
+        const prevMessages = req.body.prevMessages
 
-        const message = { id: Math.random() * 100000, text: result.text, type: "ai" };
+        const prevMessagesHistory: CreateChatParameters["history"] = prevMessages.map((msg) => {
+            return {parts: [{text: msg.text}], role: msg.type === "ai" ? "model" : "user"}
+        })
+
+        const ai = new GoogleGenAI({});
+
+        const chat = ai.chats.create({
+            model: "gemini-2.5-pro",
+            history: prevMessagesHistory
+        })
+
+        const result = await chat.sendMessage({message: req.body.message})
+
+        const responseMessage = { id: Math.random() * 100000, text: result.text, type: "ai" };
 
         setTimeout(() => {
-            res.json(message);
+            res.json(responseMessage);
         }, 500);
 
     } catch (error) {
