@@ -14,7 +14,7 @@ export function ChatMessages() {
 
     useEffect(() => {
         if (messagesElement.current) {
-            if (messages[messages.length - 1].type === "user") {
+            if (messages[messages.length - 1].role === "user") {
                 messagesElement.current?.scrollTo({top: messagesElement.current.scrollHeight, behavior: "smooth"})
             }
         }

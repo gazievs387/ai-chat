@@ -28,7 +28,7 @@ export function useChatMessages() {
     }, [])
 
     const sendMessage = useCallback(async (message: string) => {
-        setMessages(prevMessages => [...prevMessages, {id: Math.random() * 1000000, text: message, type: "user"}]) 
+        setMessages(prevMessages => [...prevMessages, {id: Math.random() * 1000000, text: message, role: "user"}]) 
 
         sendMessageRequest(message, messages)
     }, [messages, error])

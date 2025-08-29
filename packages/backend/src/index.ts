@@ -25,7 +25,7 @@ app.post('/send-message', async (req: Request<any, any, {message: string, prevMe
         const prevMessages = req.body.prevMessages
 
         const prevMessagesHistory: CreateChatParameters["history"] = prevMessages.map((msg) => {
-            return {parts: [{text: msg.text}], role: msg.type === "ai" ? "model" : "user"}
+            return {parts: [{text: msg.text}], role: msg.role}
         })
 
         const ai = new GoogleGenAI({});
@@ -37,7 +37,7 @@ app.post('/send-message', async (req: Request<any, any, {message: string, prevMe
 
         const result = await chat.sendMessage({message: req.body.message})
 
-        const responseMessage = { id: Math.random() * 100000, text: result.text, type: "ai" };
+        const responseMessage: MessageType = { id: Math.random() * 100000, text: result.text || "", role: "model"};
 
         setTimeout(() => {
             res.json(responseMessage);

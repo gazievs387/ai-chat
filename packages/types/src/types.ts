@@ -3,6 +3,6 @@
 
 export interface MessageType {
     id: number;
-    type: "ai" | "user";
+    role: "model" | "user";
     text: string;
 }

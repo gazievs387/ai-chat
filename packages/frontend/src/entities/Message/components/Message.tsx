@@ -11,7 +11,7 @@ interface MessageProps {
 
 
 function MessageComponent({message} : MessageProps) {
-    const isUserMessage = message.type === "user"
+    const isUserMessage = message.role === "user"
 
 
     return (
