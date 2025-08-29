@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState } from 'react';
 import { ChatMessages } from "shared/model/chatMessages"
 import { QueryError } from 'shared/types/api';
-import { MessageType } from 'shared/types/messages';
+import { MessageType } from '@ai_chat/types';
 
 
 export function ChatMessagesProvider({children}: PropsWithChildren) {

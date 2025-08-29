@@ -1,7 +1,7 @@
 import { useCallback, useContext } from "react"
 import { ChatMessages } from "./chatMessages"
 import axios, { isAxiosError } from "axios"
-import { MessageType } from "shared/types/messages"
+import { MessageType } from "@ai_chat/types"
 
 
 export function useChatMessages() {

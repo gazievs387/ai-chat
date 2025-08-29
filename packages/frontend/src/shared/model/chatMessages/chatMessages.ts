@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 import { QueryError } from "shared/types/api";
-import { MessageType } from "shared/types/messages";
+import { MessageType } from "@ai_chat/types";
 
 
 interface ChatMessagesContext {

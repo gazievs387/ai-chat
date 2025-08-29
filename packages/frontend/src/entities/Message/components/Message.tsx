@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Box, Typography} from '@mui/material';
-import { MessageType } from 'shared/types/messages';
+import { MessageType } from '@ai_chat/types';
 import styles from "./styles.module.scss"
 import { MessageMarkdown } from './MessageMarkdown';
 
