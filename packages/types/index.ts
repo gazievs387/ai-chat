@@ -1,1 +1,1 @@
-export { type MessageType } from "./src/types"
+export type { MessageType } from "./src/types"
