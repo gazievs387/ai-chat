@@ -5,6 +5,8 @@ import { useChatMessages } from 'shared/model/chatMessages';
 import { Alert } from "shared/UI/Alert"
 import { LoadIcon } from "shared/UI/LoadIcon";
 import {ErrorHandler} from "shared/UI/ErrorHandler/components/ErrorHandler";
+import { Link } from "react-router";
+import { blueMain } from "shared/static/styles/base";
 
 
 export function ChatMessages() {
@@ -65,7 +67,9 @@ export function ChatMessages() {
                 <Alert 
                     id="prototype-warn"
                 >
-                    AI Chat всего лишь прототип, поэтому для ответов используется бесплатный LLM api, который ограничен 10 запросами в час
+                    AI Chat всего лишь прототип, поэтому для ответов используется бесплатный gemini api, который имеет ограничения <Link style={{color: blueMain, textDecoration: "none"}} to={"https://ai.google.dev/gemini-api/docs/rate-limits#current-rate-limits"} target="_blank">
+                        Подробнее
+                    </Link>
                 </Alert>
             </div>}
         </Box>
