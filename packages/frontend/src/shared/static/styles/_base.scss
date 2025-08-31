@@ -12,12 +12,14 @@ $light-text-black: rgb(2, 8, 23);
 $light-text-gray: rgb(100, 116, 139);
 $light-bg-white: rgb(255, 255, 255);
 $light-bg-gray: rgb(235, 239, 243);
+$light-gray-50: rgb(250, 249, 252);
 $light-gray-a100: rgb(226, 232, 240);
 
 $dark-text-color-main: rgb(255, 255, 255);
 $dark-text-gray: rgb(148, 163, 184);
 $dark-bg-color-main: rgb(2, 8, 23);
 $dark-bg-gray: rgb(30, 41, 59);
+$dark-gray-50: rgb(35, 45, 65);
 $dark-gray-a100: rgb(30, 41, 59);
 
 
@@ -27,12 +29,14 @@ $themes: (
     'text-color': $dark-text-color-main,
     'bg-color': $dark-bg-color-main,
     'text-gray': $dark-text-gray,
+    'gray-50': $dark-gray-50,
     'gray-a100': $dark-gray-a100
   ),
   light: (
     'text-color': $light-text-black,
     'bg-color': $light-bg-white,
     'text-gray': $light-text-gray,
+    'gray-50': $light-gray-50,
     'gray-a100': $light-gray-a100
   )
 );

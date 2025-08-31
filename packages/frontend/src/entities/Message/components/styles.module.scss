@@ -38,4 +38,19 @@
         word-break: break-word; // переносим слова при необходимости
     }
 
+    table {
+        font-size: 13px;
+        border-radius: 10px;
+        padding: 10px;
+        
+        @include theme() {
+            background-color: theme-get("gray-50");
+        }
+
+    }
+
+    th, td {
+        word-break: normal;
+        padding: 10px 7px;
+    }
 }

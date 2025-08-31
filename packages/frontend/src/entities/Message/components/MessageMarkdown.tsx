@@ -1,5 +1,6 @@
 import { Typography, useTheme } from "@mui/material";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { HighlightCode } from "shared/UI/HighlightCode";
 import styles from "./styles.module.scss"
 
@@ -19,7 +20,8 @@ export function MessageMarkdown({text}: MessageMarkdownProps) {
             component="div" 
             color="textPrimary"
         >
-            <Markdown
+            <Markdown 
+                remarkPlugins={[[remarkGfm, {}]]}
                 components={{
                     code(props) {
                         const {children, className} = props
