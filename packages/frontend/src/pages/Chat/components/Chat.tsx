@@ -1,20 +1,11 @@
-import { Box, SelectChangeEvent } from '@mui/material';
+import { Box } from '@mui/material';
 import { ChatForm } from 'features/ChatForm';
-import React from 'react';
 import { ChatDrawer } from 'widgets/ChatDrawer';
 import { ChatHeader } from 'widgets/ChatHeader';
 import { ChatMessages } from 'widgets/ChatMessages';
 
 
 export function Chat() {
-    const [model, setModel] = React.useState('1');
-
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setModel(event.target.value as string);
-    };
-
-
     return (
         <main style={{display: "flex"}}>
             <ChatDrawer />
@@ -27,10 +18,7 @@ export function Chat() {
                 height: "100vh", 
                 minWidth: 0
             })}>
-                <ChatHeader 
-                    model={model} 
-                    handleChange={handleChange} 
-                />
+                <ChatHeader />
             
                 <ChatMessages />
 

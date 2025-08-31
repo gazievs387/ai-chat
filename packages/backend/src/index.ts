@@ -1,6 +1,6 @@
 import express, { Request } from "express"
 import cors from "cors"
-import { CreateChatParameters, GoogleGenAI } from "@google/genai";
+import { CreateChatParameters, GoogleGenAI, Models } from "@google/genai";
 import { config } from "dotenv";
 import { isApiError } from "./types/utils";
 import { MessageType } from "@ai_chat/types";
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/send-message', async (req: Request<any, any, {message: string, prevMessages: MessageType[]}>, res, next) => {
+app.post('/send-message', async (req: Request<any, any, {message: string, prevMessages: MessageType[], model: string}>, res, next) => {
     try {
         const prevMessages = req.body.prevMessages
 
@@ -31,7 +31,7 @@ app.post('/send-message', async (req: Request<any, any, {message: string, prevMe
         const ai = new GoogleGenAI({});
 
         const chat = ai.chats.create({
-            model: "gemini-2.5-pro",
+            model: req.body.model,
             history: prevMessagesHistory
         })
 
