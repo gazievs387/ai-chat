@@ -1,6 +1,7 @@
-import { useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import Markdown from "react-markdown";
 import { HighlightCode } from "shared/UI/HighlightCode";
+import styles from "./styles.module.scss"
 
 
 interface MessageMarkdownProps {
@@ -12,43 +13,50 @@ export function MessageMarkdown({text}: MessageMarkdownProps) {
 
 
     return (
-        <Markdown 
-            components={{
-                code(props) {
-                    const {children, className} = props
-                    const match = /language-(\w+)/.exec(className || '')
+        <Typography
+            sx={{wordSpacing: 2, lineHeight: 1.8}} 
+            className={styles.markdown} 
+            component="div" 
+            color="textPrimary"
+        >
+            <Markdown
+                components={{
+                    code(props) {
+                        const {children, className} = props
+                        const match = /language-(\w+)/.exec(className || '')
 
-                    const language = match ? match[1] : undefined
+                        const language = match ? match[1] : undefined
 
-                    if (!language) {
+                        if (!language) {
+                            return (
+                                <code 
+                                    {...props} 
+                                    style={{
+                                        backgroundColor: theme.palette.background.lightGray, 
+                                        fontSize: 14, 
+                                        paddingInline: 5, 
+                                        borderRadius: 5
+                                    }} 
+                                    className={className}
+                                >
+                                    {children}
+                                </code>
+                            )
+                        }
+
                         return (
-                            <code 
-                                {...props} 
-                                style={{
-                                    backgroundColor: theme.palette.background.lightGray, 
-                                    fontSize: 14, 
-                                    paddingInline: 5, 
-                                    borderRadius: 5
-                                }} 
-                                className={className}
+                            <HighlightCode
+                                elementProps={props}
+                                language={language}
                             >
                                 {children}
-                            </code>
+                            </HighlightCode>
                         )
                     }
-
-                    return (
-                        <HighlightCode
-                            elementProps={props}
-                            language={language}
-                        >
-                            {children}
-                        </HighlightCode>
-                    )
-                }
-            }}
-        >
-            {text}
-        </Markdown>
+                }}
+            >
+                {text}
+            </Markdown>
+        </Typography>
     )
 }

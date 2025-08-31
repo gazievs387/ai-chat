@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { Box, Typography} from '@mui/material';
 import { MessageType } from '@ai_chat/types';
-import styles from "./styles.module.scss"
 import { MessageMarkdown } from './MessageMarkdown';
 
 
@@ -28,17 +27,22 @@ function MessageComponent({message} : MessageProps) {
                 py: 0.5,
                 px: 2,
                 mr: isUserMessage ? "20%" : "unset",
+                ml: isUserMessage ? "30%" : "unset",
                 my: 1.5
             })}
         >
+            {isUserMessage 
+                ? 
             <Typography 
-                sx={{wordSpacing: 2, lineHeight: 1.8}} 
-                className={styles.markdown} 
-                component="div" 
+                sx={{wordSpacing: 2, lineHeight: 1.8}}
                 color="textPrimary"
             >
-                <MessageMarkdown text={message.text} />
+                {message.text}
             </Typography>
+                :
+            <MessageMarkdown 
+                text={message.text} 
+            />}
         </Box>
     )
 }
