@@ -98,7 +98,25 @@ function getWebpackConfig(env: any): Configuration {
                     ]
                 },
                 {
-                    test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                    test: /\.svg$/i,
+                    type: 'asset',
+                    resourceQuery: /url/,
+                },
+                {
+                    test: /\.svg$/i,
+                    issuer: /\.[jt]sx?$/,
+                    resourceQuery: { not: [/url/] },
+                    use: [
+                        {
+                            loader: '@svgr/webpack',
+                            options: {
+                                exportType: "named"
+                            }
+                        }
+                    ],
+                },
+                {
+                    test: /\.(png|jpg|jpeg|gif)$/i,
                     type: 'asset/resource',
                 },
                 {

@@ -6,12 +6,14 @@ declare module "*.png" {
     export default content
 }
 
-declare module "*.svg" {
-    const content: string;
-    const Icon: React.ReactNode;
+declare module "*.svg?url" {
+    const svg: string;
+    export default svg;
+}
 
-    export {Icon};
-    export default content;
+declare module "*.svg" {
+    import { FC, SVGProps } from "react";
+    export const ReactComponent: FC<SVGProps<SVGElement>>;
 }
 
 declare module "*.module.css" {
