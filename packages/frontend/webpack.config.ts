@@ -1,12 +1,13 @@
 import path from "path"
 import HtmlWebpackPlugin from "html-webpack-plugin"
-import { Configuration } from "webpack"
+import { Configuration, DefinePlugin } from "webpack"
 import MiniCssExtractPlugin from "mini-css-extract-plugin"
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import "webpack-dev-server"
 import ReactRefreshTypeScript from "react-refresh-typescript"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
+import dotenv from "dotenv"
 
 
 function getPath(...paths: string[]): string {
@@ -18,10 +19,15 @@ function getWebpackConfig(env: any): Configuration {
     const isProd = env.prod ? true : false 
     const isDev = !isProd
 
+    dotenv.config(isProd ? {path: "./.env.production"} : {}) 
+
 
     const plugins: Configuration["plugins"] = [
         new HtmlWebpackPlugin({template: getPath("public", "index.html")}),
         new ForkTsCheckerWebpackPlugin(),
+        new DefinePlugin({
+            "process.env": JSON.stringify(process.env)
+        })
     ]
 
     if (isProd) {
