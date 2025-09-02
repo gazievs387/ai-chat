@@ -105,6 +105,9 @@ export function AppThemeProvider({children}: PropsWithChildren) {
                             color: theme.palette.text.primary,
                             backgroundColor: theme.palette.background.default,
                             borderColor: theme.palette.divider,
+                            ":hover": {
+                                backgroundColor: theme.palette.background.lightGray
+                            }
                         })
                     }
                 },
