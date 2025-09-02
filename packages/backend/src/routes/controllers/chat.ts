@@ -1,10 +1,11 @@
 import { MessageType } from "@ai_chat/types";
 import { CreateChatParameters, GoogleGenAI } from "@google/genai";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { isApiError } from "../../types/utils";
+import { AuthRequest } from "../../types/express";
 
 
-export async function sendMessage(req: Request<any, any, {message: string, prevMessages: MessageType[], model: string}>, res: Response, next: NextFunction) {
+export async function sendMessage(req: AuthRequest<any, any, {message: string, prevMessages: MessageType[], model: string}>, res: Response, next: NextFunction) {
     try {
         const prevMessages = req.body.prevMessages
 

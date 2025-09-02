@@ -68,7 +68,7 @@ export function Block1() {
                 <Box sx={(t) => ({display: "flex", gap: 1, mt: 2, [t.breakpoints.down("sm")]: {flexDirection: "column"}})}>
                     
                     <Link to="chat">
-                        <Button variant="contained" size="large" sx={{textTransform: "none"}}>
+                        <Button variant="contained" fullWidth size="large" sx={{textTransform: "none"}}>
                             Использовать AI Chat <LuSparkles size={17} style={{marginLeft: 10}} />
                         </Button>
                     </Link>

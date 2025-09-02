@@ -1,4 +1,7 @@
 import { Box, Button, FormControl, InputBase, MenuItem, Select, SelectChangeEvent, styled, Typography, useTheme } from '@mui/material';
+import { AuthModal } from 'features/AuthModal';
+import { useState } from 'react';
+import { useAuth } from 'shared/model/authContext/hooks';
 import { useChatMessages } from 'shared/model/chatMessages';
 
 
@@ -24,6 +27,8 @@ const MenuItemText = styled(Typography, { })(({theme}) => ({
 export function ChatHeader() {
     const { model, changeModel } = useChatMessages() 
     const theme = useTheme() 
+    const { isLogin, logout } = useAuth()
+    const [openAuthModal, setOpenAuthModal] = useState(false)
 
     
     const handleChange = (event: SelectChangeEvent) => {
@@ -68,10 +73,28 @@ export function ChatHeader() {
             </FormControl>
 
             <Box sx={{mr: 5}}>
-                <Button variant="outlined" size="medium">
-                    Войти
+                {isLogin 
+                    ?
+                <Button 
+                    variant="text" 
+                    onClick={logout}
+                >
+                    Logout
                 </Button>
+                    :
+                <Button 
+                    variant="outlined" 
+                    size="medium"
+                    onClick={() => {setOpenAuthModal(true)}}
+                >
+                    Войти
+                </Button>}
             </Box>
+
+            <AuthModal 
+                open={openAuthModal} 
+                handleClose={() => setOpenAuthModal(false)} 
+            />
         </Box>
     )
 }
