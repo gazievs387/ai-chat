@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from ".";
+import { AuthContext } from "../model/authContext";
 
 
 export function useAuth() {
@@ -37,3 +37,4 @@ export function useAuth() {
 
     return { login, logout, updateTokens, isLogin, access, refresh }
 }
+ 

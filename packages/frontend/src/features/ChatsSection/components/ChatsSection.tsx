@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { ChatsList } from 'entities/ChatsList';
-import { useAuth } from 'shared/model/authContext/hooks';
+import { useAuth } from 'shared/hooks/useAuth';
 import { useGetChats } from '../hooks/useGetChats';
 import { LoadIcon } from 'shared/UI/LoadIcon';
 import { ChatType } from '@ai_chat/types';

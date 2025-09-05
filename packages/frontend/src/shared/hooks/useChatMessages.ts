@@ -1,10 +1,10 @@
 import { useCallback, useContext } from "react"
-import { ChatMessages } from "./chatMessages"
+import { ChatMessages } from "../model/chatMessages"
 import { isAxiosError } from "axios"
 import { MessageType } from "@ai_chat/types"
-import { useAuth } from "../authContext/hooks"
+import { useAuth } from "./useAuth"
 import { api } from "shared/api/api"
-import { ChatsListContext } from "../chatsListContext"
+import { ChatsListContext } from "../model/chatsListContext"
 
 
 export function useChatMessages() {

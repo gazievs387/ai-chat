@@ -1,8 +1,8 @@
 import { Box, Button, FormControl, InputBase, MenuItem, Select, SelectChangeEvent, styled, Typography, useTheme } from '@mui/material';
 import { AuthModal } from 'features/AuthModal';
 import { useState } from 'react';
-import { useAuth } from 'shared/model/authContext/hooks';
-import { useChatMessages } from 'shared/model/chatMessages';
+import { useAuth } from 'shared/hooks/useAuth';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 const MenuItemHead = styled(Typography)({

@@ -7,7 +7,7 @@ import { HiOutlinePencilAlt } from "react-icons/hi";
 import { blueMain } from 'shared/static/styles/base';
 import { RiChatAiFill } from 'react-icons/ri';
 import { ChatsSection } from 'features/ChatsSection';
-import { useChatMessages } from 'shared/model/chatMessages';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({

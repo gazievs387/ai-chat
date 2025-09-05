@@ -1,7 +1,7 @@
 import { ChatType } from '@ai_chat/types';
 import { List } from '@mui/material';
 import { ChatItem } from './ChatItem';
-import { useChatMessages } from 'shared/model/chatMessages';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 interface ChatsListProps {

@@ -1,6 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { useAuth } from 'shared/model/authContext/hooks';
+import { useAuth } from 'shared/hooks/useAuth';
 
 
 interface ILoginData {

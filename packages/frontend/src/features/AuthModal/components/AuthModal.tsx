@@ -3,7 +3,7 @@ import { ReactComponent as GoogleIcon } from "shared/static/svgs/google.svg"
 import { useGoogleOAuth } from "../hooks/useGoogleOAuth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
-import { useChatMessages } from "shared/model/chatMessages";
+import { useChatMessages } from "shared/hooks/useChatMessages";
 
 
 interface AuthModalProps {

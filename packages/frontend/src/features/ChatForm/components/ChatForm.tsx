@@ -2,7 +2,7 @@ import { Box, Button, TextField, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { LuSendHorizontal } from 'react-icons/lu';
 import { MdOutlineAttachFile } from 'react-icons/md';
-import { useChatMessages } from 'shared/model/chatMessages';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 export function ChatForm() {

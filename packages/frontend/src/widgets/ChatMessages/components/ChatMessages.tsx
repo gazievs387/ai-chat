@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import { Box, Typography } from '@mui/material';
 import { Message } from 'entities/Message';
-import { useChatMessages } from 'shared/model/chatMessages';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 import { Alert } from "shared/UI/Alert"
 import { LoadIcon } from "shared/UI/LoadIcon";
 import {ErrorHandler} from "shared/UI/ErrorHandler/components/ErrorHandler";
