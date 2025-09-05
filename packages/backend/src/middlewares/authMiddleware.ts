@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken"
+import jwt, { TokenExpiredError } from "jsonwebtoken"
 import { SECRET_KEY } from "../config";
-import { isJwtPayload } from "../types/utils";
+import { isJwtPayload, isTokenExpiredError } from "../types/utils";
 import { AuthRequest } from "../types/express";
 
 
@@ -11,11 +11,11 @@ function handleUnauthorized(res: Response, next: NextFunction, raiseError: boole
 
 export function authMiddleware(raiseError=true) {
     return function (req: AuthRequest, res: Response, next: NextFunction) {
-        const prevRefreshToken = req.body.refresh
-    
+        const access = req.headers.authorization as string;
+
         try {
-            const payload = jwt.verify(prevRefreshToken, SECRET_KEY)
-            
+            const payload = jwt.verify(access, SECRET_KEY)
+
             if (isJwtPayload(payload)) {
                 req.user = { id: payload.id, name: payload.name }
     
@@ -25,7 +25,9 @@ export function authMiddleware(raiseError=true) {
             }
     
         } catch (error) {
-            handleUnauthorized(res, next, raiseError)
+            const isTokenExpired = isTokenExpiredError(error)
+
+            handleUnauthorized(res, next, raiseError || isTokenExpired)
         }
         
     }

@@ -3,6 +3,7 @@ import { ReactComponent as GoogleIcon } from "shared/static/svgs/google.svg"
 import { useGoogleOAuth } from "../hooks/useGoogleOAuth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
+import { useChatMessages } from "shared/model/chatMessages";
 
 
 interface AuthModalProps {
@@ -12,8 +13,16 @@ interface AuthModalProps {
 
 
 function AuthModalComponent({open, handleClose}: AuthModalProps) {
+    const { startNewChat } = useChatMessages() 
+
+    function onLoginSuccess() {
+        handleClose() 
+
+        startNewChat()
+    }
+
     const [error, setError] = useState(false)
-    const googleLogin = useGoogleOAuth({onSuccess: handleClose, onError: () => setError(true)}) 
+    const googleLogin = useGoogleOAuth({onSuccess: onLoginSuccess, onError: () => setError(true)}) 
 
 
     return (

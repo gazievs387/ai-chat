@@ -1,26 +1,41 @@
 import { useCallback, useContext } from "react"
 import { ChatMessages } from "./chatMessages"
-import axios, { isAxiosError } from "axios"
+import { isAxiosError } from "axios"
 import { MessageType } from "@ai_chat/types"
+import { useAuth } from "../authContext/hooks"
+import { api } from "shared/api/api"
 
 
 export function useChatMessages() {
-    const {model, setModel, messages, setMessages, loading, setLoading, error, setError} = useContext(ChatMessages)
+    const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, error, setError} = useContext(ChatMessages)
+    const { access } = useAuth()
 
-    
-    const changeModel = (modeValue: string) => {
+
+    function startNewChat() {
         setMessages([])
-        
+
+        setChatId(undefined)
+    }
+
+    const changeModel = (modeValue: string) => {
         setModel(modeValue);
+
+        startNewChat()
     };
 
     const sendMessageRequest = useCallback(async (newMessageText: string, prevMessages: MessageType[]) => {
         setLoading(true) 
 
         try {
-            const response = await axios.post("http://localhost:3001/send-message", {message: newMessageText, prevMessages, model})
+            const response = await api.post("send-message", {message: newMessageText, prevMessages, model, chatId}, {headers: {Authorization: access}})
 
-            const responseMessage = response.data   
+            const responseMessage = response.data.message
+
+            const responseChatId = response.data.chatId
+
+            if (!chatId) {
+                setChatId(responseChatId)
+            }
         
             setMessages(prevMessages => [...prevMessages, responseMessage]) 
         } catch (error) {
@@ -31,7 +46,7 @@ export function useChatMessages() {
         } finally {
             setLoading(false)
         }
-    }, [model])
+    }, [model, chatId])
 
     const sendMessage = useCallback(async (message: string) => {
         setMessages(prevMessages => [...prevMessages, {id: Math.random() * 1000000, text: message, role: "user"}]) 
@@ -50,5 +65,5 @@ export function useChatMessages() {
 
 
 
-    return {model, changeModel, messages, sendMessage, resend, loading, error}
+    return {model, changeModel, startNewChat, messages, sendMessage, resend, loading, error}
 }

@@ -1,5 +1,6 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { AuthContext } from "shared/model/authContext";
+import { registerAuthContextUpdater } from "shared/model/utils/updateAuthContext";
 
 
 function getTokensFromLocalStorage() {
@@ -16,6 +17,15 @@ function getTokensFromLocalStorage() {
 function AuthProvider({children}: PropsWithChildren) {
     const [isLogin, setIsLogin] = useState<boolean>(localStorage.getItem("login") ? true : false) 
     const [tokens, setTokens] = useState<{access?: string, refresh?: string}>(getTokensFromLocalStorage())
+
+
+    useEffect(() => {
+        registerAuthContextUpdater(setIsLogin, setTokens)
+    
+        return () => {
+            registerAuthContextUpdater(undefined, undefined)
+        }
+    }, [])
 
 
     return (

@@ -55,7 +55,7 @@ export async function refreshToken(req: Request<any, any, {refresh: string}>, re
         if (isJwtPayload(payload)) {
             const { accessToken, refreshToken } = getJwtTokens({id: payload.id, name: payload.name})
 
-            res.json({accessToken, refreshToken})
+            res.json({access: accessToken, refresh: refreshToken})
         } else {
             res.status(401).json({ message: "Invalid or expired refresh token" });
         }
@@ -65,7 +65,6 @@ export async function refreshToken(req: Request<any, any, {refresh: string}>, re
     }
 
 }
-
 
 
 export { auth }

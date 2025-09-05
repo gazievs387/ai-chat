@@ -1,5 +1,5 @@
 import { ApiError } from "@google/genai";
-import { JwtPayload } from "jsonwebtoken";
+import { JwtPayload, TokenExpiredError } from "jsonwebtoken";
 
 
 export function isApiError(error: any): error is ApiError {
@@ -13,4 +13,13 @@ export function isApiError(error: any): error is ApiError {
 
 export function isJwtPayload(payload: any): payload is JwtPayload {
     return typeof payload === "object"
+}
+
+
+export function isTokenExpiredError(error: unknown): error is TokenExpiredError {
+    if (!error) {
+        return false
+    }
+
+    return (typeof error === "object" && "name" in error && error.name === "TokenExpiredError")
 }
