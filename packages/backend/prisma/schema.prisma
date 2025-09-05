@@ -17,10 +17,15 @@ datasource db {
 model Message {
   id        Int      @id @default(autoincrement())
   text      String   @db.Text
-  role      String   @db.VarChar(10)
+  role      Role
   createdAt DateTime @default(now())
   chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
   chatId    Int
+}
+
+enum Role {
+  user
+  model
 }
 
 model Chat {
