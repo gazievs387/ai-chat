@@ -27,24 +27,26 @@ function handleSendMessageError(error: unknown): [number, {message: string, code
 }
 
 
-export async function sendMessage(req: AuthRequest<any, any, {message: string, prevMessages: MessageType[], model: string, chatId?: number}>, res: Response, next: NextFunction) {
+export async function sendMessage(req: AuthRequest<any, any, {message: string, prevMessages: MessageType[], model: string, chatId?: number}>, res: Response) {
     try {
         const {message, prevMessages, model, chatId} = req.body
 
-        const result = await aiApiService.sendMessage(message, prevMessages, model)
+        const isNewChat = (prevMessages.length <= 1 && !chatId)
+
+        const result = await aiApiService.sendMessage(message, prevMessages, model, isNewChat)
 
         const response: SendMessageResponse = { 
             message: {
-                id: Math.random() * 100000, text: result.text || "", role: "model"
+                id: Math.random() * 100000, text: result.message || "", role: "model"
             }
         }
 
         const user = req.user
 
         if (user) {
-            if (prevMessages.length <= 1 && !chatId) {
+            if (isNewChat && result.title) {
                 const chatData = {
-                    title: "one",
+                    title: result.title,
                     userId: user.id,
                     model: req.body.model,
                 }
@@ -55,14 +57,14 @@ export async function sendMessage(req: AuthRequest<any, any, {message: string, p
                         role: "user"
                     },
                     {
-                        text: result.text || "",
+                        text: result.message || "",
                         role: "model"
                     }
                 ]
 
-                const id = await chatService.createChat(chatData, messages)
+                const chat = await chatService.createChat(chatData, messages)
 
-                response.chatId = id
+                response.newChat = chat
 
             } else if (chatId) {
                 await chatService.addMessages([
@@ -72,7 +74,7 @@ export async function sendMessage(req: AuthRequest<any, any, {message: string, p
                         chatId: chatId
                     },
                     {
-                        text: result.text || "",
+                        text: result.message || "",
                         role: "model",
                         chatId: chatId
                     }
@@ -91,4 +93,12 @@ export async function sendMessage(req: AuthRequest<any, any, {message: string, p
         return res.status(status).json(json)
     }
 
+}
+
+export async function getChats(req: AuthRequest, res: Response) {
+    const userId = req.user?.id
+
+    const chats = await chatService.getChats(userId)
+
+    return res.json(chats)
 }

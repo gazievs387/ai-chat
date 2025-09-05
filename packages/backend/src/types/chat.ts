@@ -1,4 +1,4 @@
-import { MessageType } from "@ai_chat/types";
+import { ChatType, MessageType } from "@ai_chat/types";
 
 
 export type MessageData<T = {}> = Omit<MessageType, "id"> & T
@@ -6,5 +6,5 @@ export type MessageData<T = {}> = Omit<MessageType, "id"> & T
 
 export interface SendMessageResponse {
     message: MessageType;
-    chatId?: number;
+    newChat?: ChatType;
 }

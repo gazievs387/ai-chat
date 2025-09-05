@@ -6,16 +6,18 @@ interface ItemProps {
     open: boolean;
     text: string;
     Icon: IconType;
+    onClick?: () => void;
 }
 
 
-export function Item({open, text, Icon}: ItemProps) {
+export function Item({open, text, Icon, onClick}: ItemProps) {
     const t = useTheme() 
 
 
     return (
         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
+                onClick={onClick}
                 sx={[
                 {
                     minHeight: 48,

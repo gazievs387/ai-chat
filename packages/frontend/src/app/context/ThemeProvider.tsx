@@ -215,6 +215,27 @@ export function AppThemeProvider({children}: PropsWithChildren) {
                             }
                         })
                     }
+                },
+                MuiDrawer: {
+                    styleOverrides: {
+                        root: {
+                            "& .MuiPaper-root": {
+                                '&::-webkit-scrollbar': {
+                                    width: '8px',
+                                },
+                                '&::-webkit-scrollbar-track': {
+                                    background: "transparent", 
+                                },
+                                '&::-webkit-scrollbar-thumb': {
+                                    background: "lightgray",
+                                    borderRadius: '10px',
+                                },
+                                '&::-webkit-scrollbar-thumb:hover': {
+                                    backgroundColor: '#555'
+                                },
+                            },
+                        }
+                    }
                 }
             },
             breakpoints: {

@@ -4,12 +4,14 @@ import { isAxiosError } from "axios"
 import { MessageType } from "@ai_chat/types"
 import { useAuth } from "../authContext/hooks"
 import { api } from "shared/api/api"
+import { ChatsListContext } from "../chatsListContext"
 
 
 export function useChatMessages() {
     const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, error, setError} = useContext(ChatMessages)
+    const { setChats } = useContext(ChatsListContext)
     const { access } = useAuth()
-
+    
 
     function startNewChat() {
         setMessages([])
@@ -31,10 +33,12 @@ export function useChatMessages() {
 
             const responseMessage = response.data.message
 
-            const responseChatId = response.data.chatId
+            const responseChat = response.data.newChat
 
-            if (!chatId) {
-                setChatId(responseChatId)
+            if (!chatId && responseChat) {
+                setChatId(responseChat.id)
+
+                setChats(chats => [responseChat, ...chats])
             }
         
             setMessages(prevMessages => [...prevMessages, responseMessage]) 
@@ -65,5 +69,5 @@ export function useChatMessages() {
 
 
 
-    return {model, changeModel, startNewChat, messages, sendMessage, resend, loading, error}
+    return {model, changeModel, chatId, startNewChat, messages, sendMessage, resend, loading, error}
 }

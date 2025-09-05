@@ -1,11 +1,13 @@
 import { IconButton, List, styled } from '@mui/material';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { LuChevronLeft, LuSearch } from 'react-icons/lu';
 import { Drawer } from 'shared/UI/Drawer';
 import { Item } from './Item';
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { blueMain } from 'shared/static/styles/base';
 import { RiChatAiFill } from 'react-icons/ri';
+import { ChatsSection } from 'features/ChatsSection';
+import { useChatMessages } from 'shared/model/chatMessages';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -18,6 +20,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 
 export function ChatDrawer() {
+    const { startNewChat } = useChatMessages()
     const [open, setOpen] = useState(true);
 
      
@@ -49,16 +52,12 @@ export function ChatDrawer() {
             </DrawerHeader>
 
             <List>
-                <Item text="Новый чат" Icon={HiOutlinePencilAlt} open={open} />
+                <Item onClick={startNewChat} text="Новый чат" Icon={HiOutlinePencilAlt} open={open} />
 
                 <Item text="Поиск в чатах" Icon={LuSearch} open={open} />
             </List>
 
-            {/* <List sx={{px: 2.5, mt: 5}}>
-                <Box sx={{opacity: open ? 1 : 0}}>
-                    <Typography color="textSecondary" sx={{fontSize: 14, userSelect: "none"}}>Чаты</Typography>
-                </Box>
-            </List> */}
+            <ChatsSection open={open} />
         </Drawer>
     )
 }

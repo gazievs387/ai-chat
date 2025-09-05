@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { sendMessage } from "./controllers/chat";
+import { getChats, sendMessage } from "./controllers/chat";
 import { auth, refreshToken } from "./controllers/auth";
 import { authMiddleware } from "../middlewares/authMiddleware";
 
@@ -8,6 +8,8 @@ const router = Router()
 
 
 router.post("/send-message", authMiddleware(false), sendMessage)
+
+router.get("/chats", authMiddleware(), getChats)
 
 router.post("/auth", auth)
 

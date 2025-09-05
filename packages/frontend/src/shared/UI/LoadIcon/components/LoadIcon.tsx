@@ -2,11 +2,12 @@ import { Box, CircularProgress, SxProps, Theme } from "@mui/material";
 
 
 interface LoadIconProps {
-    sx?: SxProps<Theme>
+    sx?: SxProps<Theme>;
+    size?: number
 }
 
 
-export function LoadIcon({sx}: LoadIconProps) {
+export function LoadIcon({sx, size}: LoadIconProps) {
     return (
       <Box sx={{alignSelf: "center", ...sx}}>
         <svg width={0} height={0}>
@@ -17,7 +18,7 @@ export function LoadIcon({sx}: LoadIconProps) {
             </linearGradient>
           </defs>
         </svg>
-        <CircularProgress sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
+        <CircularProgress size={size} sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
       </Box>
     );
 }

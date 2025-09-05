@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express";
-import jwt, { TokenExpiredError } from "jsonwebtoken"
+import { NextFunction, Response } from "express";
+import jwt from "jsonwebtoken"
 import { SECRET_KEY } from "../config";
 import { isJwtPayload, isTokenExpiredError } from "../types/utils";
 import { AuthRequest } from "../types/express";

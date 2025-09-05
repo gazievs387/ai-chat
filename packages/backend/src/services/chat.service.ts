@@ -1,4 +1,4 @@
-import { MessageType } from "@ai_chat/types";
+import { ChatType, MessageType } from "@ai_chat/types";
 import { db } from "../model";
 import { PrismaClient } from "../model/prisma";
 import { MessageData } from "../types/chat";
@@ -18,8 +18,8 @@ class ChatService {
         this.db = db
     }
 
-    public async createChat(chatData: ChatData, messages: MessageData[] = []): Promise<number> {
-        const newChat = await db.chat.create({
+    public async createChat(chatData: ChatData, messages: MessageData[] = []): Promise<ChatType> {
+        const {userId, ...newChat} = await db.chat.create({
             data: {
                 title: chatData.title,
                 userId: chatData.userId,
@@ -30,13 +30,19 @@ class ChatService {
             }
         })
 
-        return newChat.id
+        return newChat
     }
 
     public async addMessages(messages: (MessageData<{chatId: number}>)[]) {
         const msgs = messages.map((msg) => db.message.create({data: msg}));
 
         await db.$transaction(msgs)
+    }
+
+    public async getChats(userId?: number): Promise<ChatType[]> {
+        const chats = await this.db.chat.findMany({where: {userId: userId}, omit: {userId: true}, orderBy: {id: "desc"}})
+
+        return chats
     }
 
 }
