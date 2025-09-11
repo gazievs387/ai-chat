@@ -19,14 +19,24 @@ export function useChatMessages() {
         setChatId(undefined)
     }
 
-    const changeModel = (modeValue: string) => {
+    function changeModel(modeValue: string) {
         setModel(modeValue);
 
         startNewChat()
     };
 
+    async function getChat(chatId: number) {
+        const response = await api.get("chat/" + chatId)
+
+        const { chat, messages } = response.data
+
+        setChatId(chat.id)
+        setModel(chat.model)
+        setMessages(messages)
+    }
+
     const sendMessageRequest = useCallback(async (newMessageText: string, prevMessages: MessageType[]) => {
-        setLoading(true) 
+        setLoading(true)
 
         try {
             const response = await api.post("send-message", {message: newMessageText, prevMessages, model, chatId}, {headers: {Authorization: access}})
@@ -69,5 +79,5 @@ export function useChatMessages() {
 
 
 
-    return {model, changeModel, chatId, startNewChat, messages, sendMessage, resend, loading, error}
+    return {model, changeModel, chatId, startNewChat, getChat, messages, sendMessage, resend, loading, error}
 }

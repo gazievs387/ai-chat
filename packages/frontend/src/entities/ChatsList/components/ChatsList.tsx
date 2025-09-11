@@ -17,6 +17,7 @@ export function ChatsList({chats}: ChatsListProps) {
                 return (
                     <ChatItem 
                         key={chat.id} 
+                        id={chat.id}
                         active={chatId === chat.id} 
                         text={chat.title} 
                     />

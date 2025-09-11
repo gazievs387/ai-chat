@@ -45,6 +45,23 @@ class ChatService {
         return chats
     }
 
+    public async getChatWithMessages(chatId: number): Promise<{ chat: ChatType; messages: MessageType[]; } | undefined> {
+        try {
+            const chatQuery = this.db.chat.findUnique({where: {id: chatId}})
+
+            const messages = await chatQuery.messages({orderBy: {id: "asc"}, select: {id: true, text: true, role: true}})
+
+            const chat = await chatQuery
+
+            if (!chat || !messages) return undefined
+
+            return { chat, messages }
+        } catch (error) {
+            return undefined
+        }
+
+    }
+
 }
 
 

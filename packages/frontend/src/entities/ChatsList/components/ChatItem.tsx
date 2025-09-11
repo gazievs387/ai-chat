@@ -1,17 +1,23 @@
 import { ListItem, ListItemButton, ListItemText, useTheme } from '@mui/material';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 interface ChatItemProps {
+    id: number;
     text: string;
     active?: boolean;
 }
 
-export function ChatItem({text, active=false}: ChatItemProps) {
+export function ChatItem({id, text, active=false}: ChatItemProps) {
     const t = useTheme() 
 
+    const { getChat } = useChatMessages()
+
+    
     return (
         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
+                onClick={() => {getChat(id)}}
                 sx={{
                     minHeight: 36,
                     bgcolor: active ? t.palette.background.default : "initial",

@@ -10,7 +10,7 @@ import { blueMain } from "shared/static/styles/base";
 
 
 export function ChatMessages() {
-    const { messages, loading, error, resend } = useChatMessages() 
+    const { messages, chatId, loading, error, resend } = useChatMessages() 
     const messagesElement = useRef<HTMLElement>(undefined)
 
 
@@ -22,6 +22,10 @@ export function ChatMessages() {
         }
     }, [messages])
 
+    useEffect(() => {
+        messagesElement.current?.scrollTo({top: messagesElement.current.scrollHeight, behavior: "instant"})
+    }, [chatId])
+
 
     return (
         <Box sx={(t) => ({
@@ -31,7 +35,7 @@ export function ChatMessages() {
         })}>
             {messages.length 
                 ? 
-            <Box ref={messagesElement} sx={(t) => ({
+            <Box ref={messagesElement} key={chatId} sx={(t) => ({
                     display: "flex", 
                     overflowY: "auto", 
                     flexDirection: "column", 
@@ -61,7 +65,7 @@ export function ChatMessages() {
                 <ErrorHandler error={error} retry={resend} />
             </Box> 
                 :
-            <div style={{display: "flex", flexDirection: "column", gap: 16, flex: 1, alignItems: "center", justifyContent: "center"}}>
+            <Box sx={{display: "flex", flexDirection: "column", gap: 2, flex: 1, alignItems: "center", justifyContent: "center"}}>
                 <Typography sx={{fontSize: 28}}>Что вас интересует?</Typography>
                 
                 <Alert 
@@ -79,7 +83,7 @@ export function ChatMessages() {
                         </Link>
                     </Box>
                 </Alert>
-            </div>}
+            </Box>}
         </Box>
     )
 }

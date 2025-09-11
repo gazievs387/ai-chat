@@ -102,3 +102,16 @@ export async function getChats(req: AuthRequest, res: Response) {
 
     return res.json(chats)
 }
+
+
+export async function getChat(req: AuthRequest, res: Response) {
+    const chatId = req.params.chatId
+
+    const result = await chatService.getChatWithMessages(Number(chatId))
+
+    if (!result) {
+        return res.status(404).json({message: "Chat is not found"})
+    }
+
+    return res.json(result)
+}
