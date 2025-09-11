@@ -16,6 +16,9 @@ export function useGetChats() {
     async function getChats() {
         if (!isLogin) return 
 
+        if (chats.length && !error) return
+
+
         setError(undefined)
 
         setLoading(true)
