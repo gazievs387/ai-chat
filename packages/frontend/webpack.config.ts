@@ -19,7 +19,7 @@ function getWebpackConfig(env: any): Configuration {
     const isProd = env.prod ? true : false 
     const isDev = !isProd
 
-    dotenv.config(isProd ? {path: "./.env.production"} : {}) 
+    dotenv.config(isProd ? {path: "./.env.production", quiet: true} : {quiet: true}) 
 
 
     const plugins: Configuration["plugins"] = [
