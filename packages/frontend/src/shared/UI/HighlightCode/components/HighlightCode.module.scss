@@ -1,11 +1,25 @@
 
 
 
+$code-bg-color: rgb(40, 44, 52);
+
+
+.code {
+    background-color: $code-bg-color;
+    border-radius: 10px;
+}
+
 .code_header {
     display: flex;
     justify-content: space-between;
+    border-radius: 10px;
     color: $light-main-text-contrast;
-    background-color: rgb(40, 44, 52);
-    border-radius: 10px 10px 0px 0px;
+    background-color: $code-bg-color;
     padding: 5px 10px;
+
+    button {
+        color: $light-main-text-contrast;
+        background-color: $code-bg-color;
+    }
+
 }
