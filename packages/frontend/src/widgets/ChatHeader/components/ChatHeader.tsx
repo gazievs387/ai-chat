@@ -1,8 +1,9 @@
-import { Box, Button, FormControl, InputBase, MenuItem, Select, SelectChangeEvent, styled, Typography, useTheme } from '@mui/material';
-import { AuthModal } from 'features/AuthModal';
-import { useState } from 'react';
-import { useAuth } from 'shared/hooks/useAuth';
+import { Box, FormControl, IconButton, InputBase, MenuItem, Select, SelectChangeEvent, styled, Typography, useTheme } from '@mui/material';
+import { AuthButton } from 'features/AuthButton';
+import { HiMenu } from 'react-icons/hi';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
+import { useDrawer } from 'shared/hooks/useDrawer';
+import { useIsMobile } from 'shared/hooks/useIsMobile';
 
 
 const MenuItemHead = styled(Typography)({
@@ -26,18 +27,28 @@ const MenuItemText = styled(Typography, { })(({theme}) => ({
 
 export function ChatHeader() {
     const { model, changeModel } = useChatMessages() 
+    const isMobile = useIsMobile() 
     const theme = useTheme() 
-    const { isLogin, logout } = useAuth()
-    const [openAuthModal, setOpenAuthModal] = useState(false)
+    const { open, setOpen } = useDrawer()
+ 
 
-    
     const handleChange = (event: SelectChangeEvent) => {
         changeModel(event.target.value as string);
     };
-    
-    
+ 
+
     return (
-        <Box sx={{display: "flex", justifyContent: "space-between", alignItems: "center", p: 2}}>
+        <Box 
+            sx={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                alignItems: "center", 
+                p: 2,
+                [theme.breakpoints.down("lg")]: {
+                    p: 1
+                }
+            }}
+        >
             <FormControl>
                 <Select
                     labelId="mode-select"
@@ -72,29 +83,15 @@ export function ChatHeader() {
                 </Select>
             </FormControl>
 
-            <Box sx={{mr: 5}}>
-                {isLogin 
-                    ?
-                <Button 
-                    variant="text" 
-                    onClick={logout}
-                >
-                    Logout
-                </Button>
-                    :
-                <Button 
-                    variant="outlined" 
-                    size="medium"
-                    onClick={() => {setOpenAuthModal(true)}}
-                >
-                    Войти
-                </Button>}
+            <Box sx={{mr: 5, [theme.breakpoints.down("lg")]: {mr: 1}}}>
+                {!isMobile 
+                    ? 
+                <AuthButton /> 
+                    : 
+                <IconButton onClick={() => {setOpen(true)}}>
+                    <HiMenu color={theme.palette.text.secondary} size={25} />
+                </IconButton>}
             </Box>
-
-            <AuthModal 
-                open={openAuthModal} 
-                handleClose={() => setOpenAuthModal(false)} 
-            />
         </Box>
     )
 }

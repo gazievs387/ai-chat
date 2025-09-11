@@ -31,7 +31,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
 
 export function Drawer({mobile, children, ...props}: ({mobile?: boolean} & DrawerProps)) {
     if (mobile) {
-        return <MuiDrawer {...props}>{children}</MuiDrawer>
+        return <MuiDrawer slotProps={{paper: {sx: {minWidth: 300}}}} {...props}>{children}</MuiDrawer>
     }
 
     const DrawerDesktop = useMemo(() => styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(

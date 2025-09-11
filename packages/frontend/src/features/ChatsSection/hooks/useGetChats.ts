@@ -2,16 +2,20 @@ import { ChatType } from "@ai_chat/types";
 import { AxiosError, isAxiosError } from "axios";
 import { useContext, useEffect, useState } from "react";
 import { api } from "shared/api/api";
+import { useAuth } from "shared/hooks/useAuth";
 import { ChatsListContext } from "shared/model/chatsListContext";
 
 
 export function useGetChats() {
+    const { isLogin } = useAuth()
     const { chats, setChats } = useContext(ChatsListContext)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<AxiosError | undefined>(undefined)
 
 
     async function getChats() {
+        if (!isLogin) return 
+
         setError(undefined)
 
         setLoading(true)

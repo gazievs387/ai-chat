@@ -37,6 +37,7 @@ export function ChatMessages() {
                 ? 
             <Box ref={messagesElement} key={chatId} sx={(t) => ({
                     display: "flex", 
+                    overflowX: "hidden",
                     overflowY: "auto", 
                     flexDirection: "column", 
                     flex: 1, 
@@ -65,8 +66,30 @@ export function ChatMessages() {
                 <ErrorHandler error={error} retry={resend} />
             </Box> 
                 :
-            <Box sx={{display: "flex", flexDirection: "column", gap: 2, flex: 1, alignItems: "center", justifyContent: "center"}}>
-                <Typography sx={{fontSize: 28}}>Что вас интересует?</Typography>
+            <Box 
+                sx={(t) => ({
+                    display: "flex", 
+                    flexDirection: "column", 
+                    gap: 2, 
+                    flex: 1, 
+                    alignItems: "center", 
+                    justifyContent: "center",
+                    [t.breakpoints.down("lg")]: {
+                        maxWidth: "90%",
+                        mx: "5%"
+                    }
+                })}
+            >
+                <Typography 
+                    sx={(t) => ({
+                        fontSize: 28,
+                        [t.breakpoints.down("lg")]: {
+                            fontSize: 21
+                        } 
+                    })}
+                >
+                    Что вас интересует?
+                </Typography>
                 
                 <Alert 
                     id="prototype-warn"

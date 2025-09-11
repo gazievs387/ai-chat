@@ -1,6 +1,5 @@
-import { IconButton, List, styled } from '@mui/material';
-import { useState } from 'react';
-import { LuChevronLeft, LuSearch } from 'react-icons/lu';
+import { Box, IconButton, List, styled } from '@mui/material';
+import { LuChevronLeft } from 'react-icons/lu';
 import { Drawer } from 'shared/UI/Drawer';
 import { Item } from './Item';
 import { HiOutlinePencilAlt } from "react-icons/hi";
@@ -8,6 +7,9 @@ import { blueMain } from 'shared/static/styles/base';
 import { RiChatAiFill } from 'react-icons/ri';
 import { ChatsSection } from 'features/ChatsSection';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
+import { useIsMobile } from 'shared/hooks/useIsMobile';
+import { AuthButton } from 'features/AuthButton';
+import { useDrawer } from 'shared/hooks/useDrawer';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -21,7 +23,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export function ChatDrawer() {
     const { startNewChat } = useChatMessages()
-    const [open, setOpen] = useState(true);
+    const isMobile = useIsMobile()
+    const {open, setOpen} = useDrawer()
 
      
     const handleDrawerOpen = () => {
@@ -34,7 +37,7 @@ export function ChatDrawer() {
 
     
     return (
-        <Drawer open={open}>
+        <Drawer sx={{position: "relative"}} onClose={() => {setOpen(false)}} mobile={isMobile} open={open}>
             <DrawerHeader>
                 <IconButton 
                     onClick={handleDrawerOpen}
@@ -53,11 +56,29 @@ export function ChatDrawer() {
 
             <List>
                 <Item onClick={startNewChat} text="Новый чат" Icon={HiOutlinePencilAlt} open={open} />
-
-                <Item text="Поиск в чатах" Icon={LuSearch} open={open} />
             </List>
 
             <ChatsSection open={open} />
+
+            {isMobile && 
+            <Box 
+                sx={(t) => ({
+                    position: "fixed", 
+                    width: "100%",
+                    maxWidth: "300px",
+                    bottom: 0, 
+                    boxSizing: "border-box",
+                    bgcolor: t.palette.background.default, 
+                    borderTopWidth: "2px", 
+                    borderTopStyle: "solid", 
+                    borderTopColor: t.palette.divider, 
+                    px: 2.5, 
+                    py: 1,
+                    mt: 2
+                })}
+            >
+                <AuthButton />
+            </Box>}
         </Drawer>
     )
 }

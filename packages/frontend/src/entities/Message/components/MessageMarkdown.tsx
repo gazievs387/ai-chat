@@ -1,4 +1,4 @@
-import { Typography, useTheme } from "@mui/material";
+import { SxProps, Theme, Typography, useTheme } from "@mui/material";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { HighlightCode } from "shared/UI/HighlightCode";
@@ -7,15 +7,16 @@ import styles from "./styles.module.scss"
 
 interface MessageMarkdownProps {
     text: string;
+    textSx?: SxProps<Theme>
 }
 
-export function MessageMarkdown({text}: MessageMarkdownProps) {
+export function MessageMarkdown({text, textSx}: MessageMarkdownProps) {
     const theme = useTheme() 
 
 
     return (
         <Typography
-            sx={{wordSpacing: 2, lineHeight: 1.8}} 
+            sx={{wordSpacing: 2, lineHeight: 1.8, ...textSx}} 
             className={styles.markdown} 
             component="div" 
             color="textPrimary"

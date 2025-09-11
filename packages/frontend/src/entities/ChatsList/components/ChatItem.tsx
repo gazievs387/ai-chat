@@ -1,4 +1,4 @@
-import { ListItem, ListItemButton, ListItemText, useTheme } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText, Typography, useTheme } from '@mui/material';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
@@ -15,7 +15,7 @@ export function ChatItem({id, text, active=false}: ChatItemProps) {
 
     
     return (
-        <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+        <ListItem key={text} disablePadding sx={{ display: 'block', maxWidth: 300}}>
             <ListItemButton
                 onClick={() => {getChat(id)}}
                 sx={{
@@ -32,14 +32,16 @@ export function ChatItem({id, text, active=false}: ChatItemProps) {
             >
                 <ListItemText
                     primary={text}
-                    slotProps={{primary: {
-                        noWrap: true,
-                        sx: {
-                            fontSize: 14,
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
+                    slotProps={{
+                        primary: {
+                            noWrap: true, 
+                            sx: {
+                                fontSize: 14,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }
                         }
-                    }}}
+                    }}
                 />
             </ListItemButton>
         </ListItem>

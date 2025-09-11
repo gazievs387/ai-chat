@@ -1,4 +1,4 @@
-import { Box, Button, TextField, useTheme } from '@mui/material';
+import { Box, Button, IconButton, TextField, useTheme } from '@mui/material';
 import { useState } from 'react';
 import { LuSendHorizontal } from 'react-icons/lu';
 import { MdOutlineAttachFile } from 'react-icons/md';
@@ -24,10 +24,28 @@ export function ChatForm() {
 
 
     return (
-        <Box component={"form"} sx={{display: "flex", alignItems: "flex-end", gap: 1, width: "60%", minWidth: "300px", px: "20%", py: 5}}>
-            <Button sx={{height: "40px"}} size="small">
+        <Box 
+            component={"form"} 
+            sx={{
+                display: "flex", 
+                alignItems: "flex-end", 
+                gap: 2, 
+                width: "60%", 
+                minWidth: "300px", 
+                px: "20%", 
+                py: 5, 
+                [theme.breakpoints.down("lg")]: {
+                    width: "96%", 
+                    minWidth: "200px", 
+                    gap: 0.5, 
+                    px: "2%", 
+                    pb: 4
+                }
+            }}
+        >
+            <IconButton sx={{height: "40px"}} size="small">
                 <MdOutlineAttachFile color={theme.palette.text.secondary} size={25} />
-            </Button>
+            </IconButton>
 
             <TextField
                 value={text}
@@ -35,8 +53,16 @@ export function ChatForm() {
                 multiline 
                 sx={{
                     scrollbarColor: "#000", 
-                    msScrollbarTrackColor: "black"
-
+                    msScrollbarTrackColor: "black",
+                    "& textarea": !text ? {
+                        textWrap: "nowrap",
+                        textOverflow: "hidden"
+                    } : {},
+                    [theme.breakpoints.down("lg")]: {
+                        "& textarea": {
+                            fontSize: 14
+                        }
+                    }
                 }}
                 onKeyDown={(e) => {
                     if(e.key === "Enter" && !e.shiftKey) {
@@ -50,9 +76,9 @@ export function ChatForm() {
                 size="small" 
             /> 
             
-            <Button onClick={handleMessage} sx={{height: "40px"}} size="small">
+            <IconButton onClick={handleMessage} sx={{height: "40px"}} size="small">
                 <LuSendHorizontal color={theme.palette.text.secondary} size={25} />
-            </Button>
+            </IconButton>
         </Box>
     )
 }

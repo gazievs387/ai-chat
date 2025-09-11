@@ -5,15 +5,23 @@ import { MessageType } from "@ai_chat/types"
 import { useAuth } from "./useAuth"
 import { api } from "shared/api/api"
 import { ChatsListContext } from "../model/chatsListContext"
+import { useDrawer } from "./useDrawer"
+import { useIsMobile } from "./useIsMobile"
 
 
 export function useChatMessages() {
     const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, error, setError} = useContext(ChatMessages)
     const { setChats } = useContext(ChatsListContext)
     const { access } = useAuth()
+    const isMobile = useIsMobile()
+    const { setOpen } = useDrawer()
     
 
     function startNewChat() {
+        if (isMobile) {
+            setOpen(false)
+        }
+
         setMessages([])
 
         setChatId(undefined)
@@ -30,6 +38,10 @@ export function useChatMessages() {
 
         const { chat, messages } = response.data
 
+        if (isMobile) {
+            setOpen(false)
+        }
+        
         setChatId(chat.id)
         setModel(chat.model)
         setMessages(messages)

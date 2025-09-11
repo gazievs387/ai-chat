@@ -29,7 +29,7 @@ function AuthModalComponent({open, handleClose}: AuthModalProps) {
         <Dialog maxWidth={false} onClose={() => {setError(false); handleClose()}} open={open}>
             <DialogTitle>Вход</DialogTitle>
 
-            <DialogContent sx={{minWidth: 280, maxWidth: 290}}>
+            <DialogContent sx={(t) => ({minWidth: 280, maxWidth: 290, [t.breakpoints.down("lg")]: {minWidth: "unset"}})}>
                 <Button onClick={() => {setError(false); googleLogin()}} fullWidth variant="outlined" sx={{mb: 2}}>
                     <GoogleIcon width={22} height={22} style={{marginRight: 10}}/> Войти через Google
                 </Button>
