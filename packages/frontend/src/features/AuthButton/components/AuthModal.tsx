@@ -4,6 +4,7 @@ import { useGoogleOAuth } from "../hooks/useGoogleOAuth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useState } from "react";
 import { useChatMessages } from "shared/hooks/useChatMessages";
+import { useToast } from "shared/hooks/useToast";
 
 
 interface AuthModalProps {
@@ -14,11 +15,14 @@ interface AuthModalProps {
 
 function AuthModalComponent({open, handleClose}: AuthModalProps) {
     const { startNewChat } = useChatMessages() 
+    const toast = useToast()
 
     function onLoginSuccess() {
         handleClose() 
 
         startNewChat()
+
+        toast("Вход выполнен успешно")
     }
 
     const [error, setError] = useState(false)
