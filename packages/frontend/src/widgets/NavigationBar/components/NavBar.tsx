@@ -6,6 +6,7 @@ import { Logo } from 'shared/UI/Logo';
 import { LuMenu, LuX } from "react-icons/lu";
 import { useIsDark } from "shared/model/themeContext";
 import { darkBgMain, lightBgWhite } from "shared/static/styles/base";
+import { Link } from "react-router";
 
 
 function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
@@ -20,20 +21,22 @@ function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
 
             <ThemeBtn />
 
-            <Button 
-                fullWidth={isMobile} 
-                variant="contained" 
-                sx={(t) => ({
-                    maxWidth: "600px", 
-                    textTransform: "none", 
-                    paddingInline: 4, 
-                    [t.breakpoints.up("lg")]: {
-                        ml: "20px"
-                    }
-                })}
-            >
-                Начать
-            </Button>
+            <Link to="chat">
+                <Button 
+                    fullWidth={isMobile} 
+                    variant="contained" 
+                    sx={(t) => ({
+                        maxWidth: "600px", 
+                        textTransform: "none", 
+                        paddingInline: 4, 
+                        [t.breakpoints.up("lg")]: {
+                            ml: "20px"
+                        }
+                    })}
+                >
+                    Начать
+                </Button>
+            </Link>
         </div>
     )
 }

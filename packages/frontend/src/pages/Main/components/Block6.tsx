@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import { LuChevronRight, LuSparkles } from 'react-icons/lu';
+import { Link } from 'react-router';
 
 
 export function Block6() {
@@ -47,33 +48,38 @@ export function Block6() {
                     }
                 })}
             >
-                <Button 
-                    variant="outlined"
-                    sx={{
-                        py: "6px",
-                        ":hover": {
-                            opacity: 0.85,
-                        }
-                    }}
-                >
-                    Начать пробную версию <LuSparkles style={{marginLeft: 16}} />
-                </Button>
-
-                <Button 
-                    sx={(t) => ({
-                        borderStyle: "solid", 
-                        borderWidth: 1, 
-                        borderColor: t.palette.primary.contrastText, 
-                        color: t.palette.primary.contrastText,
-                        textTransform: "none",
-                        ":hover": {
-                            color: t.palette.primary.main,
-                            bgcolor: t.palette.primary.contrastText,
-                        }
-                    })}
-                >
-                    Начать бесплатно <LuChevronRight style={{marginLeft: 16}} />
-                </Button>
+                <Link to="chat">
+                    <Button 
+                        variant="outlined"
+                        sx={{
+                            py: "6px",
+                            ":hover": {
+                                opacity: 0.85,
+                            }
+                        }}
+                    >
+                        Начать пробную версию <LuSparkles style={{marginLeft: 16}} />
+                    </Button>
+                </Link>
+                
+                <Link to="chat">
+                    <Button 
+                        fullWidth
+                        sx={(t) => ({
+                            borderStyle: "solid", 
+                            borderWidth: 1, 
+                            borderColor: t.palette.primary.contrastText, 
+                            color: t.palette.primary.contrastText,
+                            textTransform: "none",
+                            ":hover": {
+                                color: t.palette.primary.main,
+                                bgcolor: t.palette.primary.contrastText,
+                            }
+                        })}
+                    >
+                        Начать бесплатно <LuChevronRight style={{marginLeft: 16}} />
+                    </Button>
+                </Link>
             </Box>
         </Box>
     )

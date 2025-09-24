@@ -72,10 +72,12 @@ export function Block1() {
                             Использовать AI Chat <LuSparkles size={17} style={{marginLeft: 10}} />
                         </Button>
                     </Link>
-
-                    <Button variant="outlined" size="large" sx={{textTransform: "none"}}>
-                        Узнать больше <BsChevronRight size={12} style={{marginLeft: 10}} />
-                    </Button>
+                    
+                    <Link to="chat">
+                        <Button variant="outlined" fullWidth size="large" sx={{textTransform: "none"}}>
+                            Узнать больше <BsChevronRight size={12} style={{marginLeft: 10}} />
+                        </Button>
+                    </Link>
                 </Box>
             </Box>
 
