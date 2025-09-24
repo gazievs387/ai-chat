@@ -39,7 +39,7 @@ export function useGetChats() {
 
     useEffect(() => {
         getChats()
-    }, [])
+    }, [isLogin])
     
 
     return { chats, loading, error, retry: getChats}

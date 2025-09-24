@@ -7,6 +7,7 @@ import { api } from "shared/api/api"
 import { ChatsListContext } from "../model/chatsListContext"
 import { useDrawer } from "./useDrawer"
 import { useIsMobile } from "./useIsMobile"
+import { useToast } from "./useToast"
 
 
 export function useChatMessages() {
@@ -15,6 +16,7 @@ export function useChatMessages() {
     const { access } = useAuth()
     const isMobile = useIsMobile()
     const { setOpen } = useDrawer()
+    const toast = useToast()
     
 
     function startNewChat() {
@@ -53,7 +55,7 @@ export function useChatMessages() {
             setModel(chat.model)
             setMessages(messages)
         } catch (error) {
-
+            toast("Не получилось загрузить чат. Попробуйте снова", "error")
         } finally {
             clearTimeout(timeout)
             
