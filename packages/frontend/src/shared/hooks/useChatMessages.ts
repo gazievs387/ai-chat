@@ -10,7 +10,7 @@ import { useIsMobile } from "./useIsMobile"
 
 
 export function useChatMessages() {
-    const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, error, setError} = useContext(ChatMessages)
+    const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, chatLoading, setChatLoading, error, setError} = useContext(ChatMessages)
     const { setChats } = useContext(ChatsListContext)
     const { access } = useAuth()
     const isMobile = useIsMobile()
@@ -34,17 +34,32 @@ export function useChatMessages() {
     };
 
     async function getChat(chatId: number) {
-        const response = await api.get("chat/" + chatId)
-
-        const { chat, messages } = response.data
+        setChatLoading(true)
 
         if (isMobile) {
             setOpen(false)
         }
         
-        setChatId(chat.id)
-        setModel(chat.model)
-        setMessages(messages)
+        const timeout =  setTimeout(() => {
+            setChatLoading(false)
+        }, 10000)
+
+        try {
+            const response = await api.get("chat/" + chatId)
+
+            const { chat, messages } = response.data
+                    
+            setChatId(chat.id)
+            setModel(chat.model)
+            setMessages(messages)
+        } catch (error) {
+
+        } finally {
+            clearTimeout(timeout)
+            
+            setChatLoading(false)
+        }
+
     }
 
     const sendMessageRequest = useCallback(async (newMessageText: string, prevMessages: MessageType[]) => {
@@ -91,5 +106,5 @@ export function useChatMessages() {
 
 
 
-    return {model, changeModel, chatId, startNewChat, getChat, messages, sendMessage, resend, loading, error}
+    return {model, changeModel, setChatLoading, chatId, startNewChat, getChat, messages, sendMessage, resend, loading, chatLoading, error}
 }

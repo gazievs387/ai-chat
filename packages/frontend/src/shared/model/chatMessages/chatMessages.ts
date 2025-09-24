@@ -12,6 +12,8 @@ interface ChatMessagesContext {
     setMessages: Dispatch<SetStateAction<MessageType[]>>,
     loading: boolean, 
     setLoading: Dispatch<SetStateAction<boolean>>,
+    chatLoading: boolean, 
+    setChatLoading: Dispatch<SetStateAction<boolean>>,
     error: QueryError, 
     setError: Dispatch<SetStateAction<QueryError>>,
 }
@@ -25,6 +27,8 @@ export const ChatMessages = createContext<ChatMessagesContext>({
     setMessages: () => {},
     loading: false,
     setLoading: () => {},
+    chatLoading: false,
+    setChatLoading: () => {},
     error: undefined,
     setError: () => {}
 })

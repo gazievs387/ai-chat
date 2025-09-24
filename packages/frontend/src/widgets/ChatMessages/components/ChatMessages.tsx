@@ -7,6 +7,7 @@ import { LoadIcon } from "shared/UI/LoadIcon";
 import {ErrorHandler} from "shared/UI/ErrorHandler/components/ErrorHandler";
 import { Link } from "react-router";
 import { blueMain } from "shared/static/styles/base";
+import { ChatLoadModal } from "features/ChatLoadModal";
 
 
 export function ChatMessages() {
@@ -33,6 +34,8 @@ export function ChatMessages() {
             flex: 1, 
             minHeight: 0
         })}>
+            <ChatLoadModal />
+
             {messages.length 
                 ? 
             <Box ref={messagesElement} key={chatId} sx={(t) => ({
