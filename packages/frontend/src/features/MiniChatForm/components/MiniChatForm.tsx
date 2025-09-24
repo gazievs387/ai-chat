@@ -1,14 +1,17 @@
+import { MessageType } from '@ai_chat/types';
 import { Box, Button, TextField } from '@mui/material';
 import React, { SyntheticEvent, useState } from 'react';
 
 
-export function MiniChatForm({onNewMessage}: {onNewMessage: (text: string) => void}) {
+export function MiniChatForm({onNewMessage}: {onNewMessage: (message: MessageType) => void}) {
     const [text, setText] = useState("")
 
 
     function sendMessage() {
         if (text.trim()) {
-            onNewMessage(text)
+            const newMessage: MessageType = {id: Math.random(), text: text, role: "user"}
+            
+            onNewMessage(newMessage)
 
             setText("")
         }

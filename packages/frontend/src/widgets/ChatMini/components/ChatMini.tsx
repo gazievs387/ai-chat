@@ -1,24 +1,68 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Button, Paper, Typography } from '@mui/material';
 import { Logo } from 'shared/UI/Logo';
 import { useState } from 'react';
 import { MiniChatForm } from 'features/MiniChatForm';
+import { MessageType } from '@ai_chat/types';
+import { useNavigate } from 'react-router';
 
 
 interface MessageProps {
-    text: string;
+    message: MessageType
 }
 
-function Message({text}: MessageProps) {
+function Message({message}: MessageProps) { 
+    const navigate = useNavigate()
+
+
+    if (message.role === "model" && message.id !== 0) {
+        return (
+            <Box
+                sx={{
+                    m: 2, 
+                    p: 1, 
+                }}
+            >
+                <Typography>
+                    Перейдите на страницу чата, чтобы продолжить
+                </Typography>
+
+                <Button onClick={() => {navigate("/chat")}} variant="outlined" sx={{mt: 1}}>
+                    Начать чат
+                </Button>
+            </Box>
+        )
+    }
+
+    
     return (
-        <Typography sx={(t) => ({bgcolor: t.palette.background.lightGray, m: 2, p: 1, pl: 2, borderRadius: 2, width: "80%"})} color="textPrimary">
-            {text}
+        <Typography 
+            sx={(t) => ({
+                bgcolor: message.id !== 0 ? t.palette.background.lightGray : t.palette.background.default, 
+                width: "60%",
+                borderRadius: 2,
+                m: 2, 
+                mt: message.id === 0 ? 2 : 4,
+                ml: message.id !== 0 ? "20%" : 0,
+                p: 1, 
+                pl: 2, 
+            })} 
+            color="textPrimary"
+        >
+            {message.text}
         </Typography>
     )
 }
 
 
 export function ChatMini() {
-    const [messages, setMessages] = useState(["Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, asperiores?", "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, asperiores?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore, asperiores?"])
+    const [messages, setMessages] = useState<MessageType[]>([{id: 0, text: "Чем могу вам помочь?", role: "model"}])
+
+
+    function onNewMessage(newMessage: MessageType) {
+        const modelMessage: MessageType = {id: Math.random(), text: "", role: "model"}
+
+        setMessages([...messages, newMessage, modelMessage])
+    }
 
 
     return (
@@ -37,11 +81,11 @@ export function ChatMini() {
 
             <Box sx={(t) => ({flex: 1, overflow: "auto", backgroundColor: t.palette.background.default})}>
                 {messages.map((item, index) => (
-                    <Message key={index} text={item} />
+                    <Message key={index} message={item} />
                 ))}
             </Box>
 
-            <MiniChatForm onNewMessage={(text) => setMessages([...messages, text])} />
+            <MiniChatForm onNewMessage={onNewMessage} />
         </Paper>
     )
 }
