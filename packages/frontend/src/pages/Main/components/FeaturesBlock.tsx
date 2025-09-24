@@ -1,5 +1,5 @@
 import { Box, Chip, Grid, Typography } from "@mui/material";
-import { Card1 } from "shared/UI/Card1";
+import { FeatureCard } from "shared/UI/FeatureCard";
 import { LuBrain, LuCode, LuFileText, LuImage, LuLock, LuZap } from "react-icons/lu";
 
 
@@ -40,7 +40,7 @@ export function FeaturesBlock() {
             >
                 <Grid container spacing={4} sx={{alignItems: "center"}}>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1 
+                        <FeatureCard 
                             Icon={LuBrain}
                             head="Лучшее понимание"
                             text="Понимает контекст, нюансы и сложные запросы с замечательной точностью"
@@ -54,35 +54,35 @@ export function FeaturesBlock() {
                         />
                     </Grid>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1
+                        <FeatureCard
                             Icon={LuZap}
                             head="Ответы в реальном времени"
                             text="Получите мгновенные, вдумчивые ответы на ваши вопросы"
                         />
                     </Grid>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1
+                        <FeatureCard
                             Icon={LuCode}
                             head="Генерация кода"
                             text="Напишет, объяснит и проверяет код на нескольких десятках языках программирования"
                         />
                     </Grid>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1
+                        <FeatureCard
                             Icon={LuFileText}
                             head="Создание контента"
                             text="Создавайте статьи, email, посты и многое другое"
                         />
                     </Grid>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1
+                        <FeatureCard
                             Icon={LuImage}
                             head="Понимание изображения"
                             text="Проанализируйте изображения для большего контроля"
                         />
                     </Grid>
                     <Grid size={{ lg: 4, xs: 12}}>
-                        <Card1
+                        <FeatureCard
                             Icon={LuLock}
                             head="Безопасность"
                             text="Ваши разговоры остаются закрытыми и конфиденциальными"

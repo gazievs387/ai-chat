@@ -11,7 +11,7 @@ type Card1Props = PropsWithChildren<{
     sx?: SxProps<Theme>
 }>
 
-export function Card1({ Icon, head, text, sx } : Card1Props) {
+export function FeatureCard({ Icon, head, text, sx } : Card1Props) {
     return (
         <Card variant="outlined" sx={[{pt: 1}, ...(Array.isArray(sx) ? sx : [sx])]}>
             <CardContent sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
