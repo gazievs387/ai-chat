@@ -24,7 +24,7 @@ api.interceptors.response.use((config) => {
 
     const originalRequest = error.config
 
-    if (error.response.status === 401 && error.config && !error.config._isRetry && (error.response?.data?.code !== "user_inactive")) {
+    if (error?.response?.status === 401 && error.config && !error.config._isRetry && (error.response?.data?.code !== "user_inactive")) {
         originalRequest._isRetry = 'true'
         try {
             const response = await axios.post(baseURL + "token/refresh", {refresh: localStorage.getItem('refresh')});
@@ -38,7 +38,7 @@ api.interceptors.response.use((config) => {
             
             return api.request(originalRequest)    
         } catch (error1) { 
-            if (error.response.status === 401 && error.config && error.config._isRetry) {
+            if (error?.response?.status === 401 && error.config && error.config._isRetry) {
                 localStorage.removeItem("login")
                 localStorage.removeItem("access")
                 localStorage.removeItem("refresh")
