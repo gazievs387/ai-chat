@@ -1,4 +1,4 @@
-import { Backdrop, Box, Fade, Modal, Typography } from '@mui/material';
+import { alpha, Backdrop, Box, Fade, Modal } from '@mui/material';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
 import { useIsMobile } from 'shared/hooks/useIsMobile';
 import { LoadIcon } from 'shared/UI/LoadIcon';
@@ -25,7 +25,7 @@ export function ChatLoadModal() {
         >
             <Fade in={chatLoading}>
                 <Box 
-                    sx={{
+                    sx={(t) => ({
                         position: 'absolute',
                         display: "flex", 
                         justifyContent: "center",
@@ -36,11 +36,10 @@ export function ChatLoadModal() {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        // width: 400,
                         boxShadow: "0px 4px 20px rgba(255,255,255,0.7)", 
-                        bgcolor: "rgba(255,255,255,0.7)",
+                        bgcolor: alpha(t.palette.background.default, 0.7),
                         p: isMobile ? 2 : 4,
-                    }}
+                    })}
                 >
                     <LoadIcon size={modalSize - 30}/>
                 </Box>
