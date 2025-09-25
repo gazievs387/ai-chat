@@ -8,6 +8,7 @@ import "webpack-dev-server"
 import ReactRefreshTypeScript from "react-refresh-typescript"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import dotenv from "dotenv"
+import CopyWebpackPlugin from "copy-webpack-plugin"
 
 
 function getPath(...paths: string[]): string {
@@ -27,11 +28,16 @@ function getWebpackConfig(env: any): Configuration {
         new ForkTsCheckerWebpackPlugin(),
         new DefinePlugin({
             "process.env": JSON.stringify(process.env)
+        }),
+        new CopyWebpackPlugin({
+            patterns: [{from: "public", to: ".", filter: (filepath) => {
+                return !filepath.endsWith("index.html")
+            }}]
         })
     ]
 
     if (isProd) {
-        plugins.push(new MiniCssExtractPlugin())
+        plugins.push(new MiniCssExtractPlugin({filename: "main.[contenthash].css"}))
     } else {
         plugins.push(new ReactRefreshWebpackPlugin())
     }
@@ -40,7 +46,7 @@ function getWebpackConfig(env: any): Configuration {
         mode: isProd ? "production" : "development",
         entry: getPath("src", "index.tsx"),
         output: {
-            filename: "index.js",
+            filename: "index.[contenthash].js",
             path: getPath("build"),
             clean: true,
             publicPath: "/"
