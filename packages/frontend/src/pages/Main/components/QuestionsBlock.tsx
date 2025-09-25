@@ -39,6 +39,7 @@ export function QuestionsBlock() {
 
     return (
         <Box
+            id="QuestionsBlock"
             sx={(t) => ({
                 display: "flex", 
                 flexDirection: "column",

@@ -5,6 +5,7 @@ import { TabBar } from 'entities/TabBar';
 export function UseCasesBlock() {
     return (
         <Box 
+            id="UseCasesBlock"
             sx={(t) => ({
                 display: "flex", 
                 flexDirection: "column",

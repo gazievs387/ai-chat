@@ -6,6 +6,7 @@ import { LuBrain, LuCode, LuFileText, LuImage, LuLock, LuZap } from "react-icons
 export function FeaturesBlock() {
     return (
         <Box 
+            id="FeaturesBlock"
             sx={(t) => ({
                 display: "flex", 
                 flexDirection: "column", 

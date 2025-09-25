@@ -6,7 +6,8 @@ import { Logo } from 'shared/UI/Logo';
 import { LuMenu, LuX } from "react-icons/lu";
 import { useIsDark } from "shared/model/themeContext";
 import { darkBgMain, lightBgWhite } from "shared/static/styles/base";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
+import { HashLink  } from "react-router-hash-link";
 
 
 function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
@@ -15,10 +16,19 @@ function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
 
     return (
         <div style={{display: show ? "flex" : "none"}} className={`${styles.navbar_items} ${styles["navbar_items" + (isMobile ? "--mobile" : "")]}`}>
-            <Typography color="textPrimary" className={styles.el}>Функции</Typography>
-            <Typography color="textPrimary" className={styles.el}>Варианты использования</Typography>
-            <Typography color="textPrimary" className={styles.el}>Есть вопросы?</Typography>
+            
+            <HashLink smooth className={styles.el} to={"#FeaturesBlock"}>
+                <Typography color="textPrimary">Функции</Typography>
+            </HashLink>
 
+            <HashLink smooth className={styles.el} to={"#UseCasesBlock"}>
+                <Typography color="textPrimary" className={styles.el}>Варианты использования</Typography>
+            </HashLink>
+
+            <HashLink smooth className={styles.el} to={{hash: "#QuestionsBlock"}}>
+                <Typography color="textPrimary" className={styles.el}>Есть вопросы?</Typography>
+            </HashLink>
+            
             <ThemeBtn />
 
             <Link to="chat">
