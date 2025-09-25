@@ -2,12 +2,13 @@ import { Button } from '@mui/material';
 import { AuthModal } from './AuthModal';
 import { useAuth } from 'shared/hooks/useAuth';
 import { useState } from 'react';
-import { useDrawer } from 'shared/hooks/useDrawer';
+import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 export function AuthButton() {
     const { isLogin, logout } = useAuth()
     const [openAuthModal, setOpenAuthModal] = useState(false)
+    const { startNewChat } = useChatMessages()
     
         
     return (
@@ -18,7 +19,7 @@ export function AuthButton() {
                     variant="text" 
                     size="medium"
                     sx={{minWidth: 0, px: 0}}
-                    onClick={logout}
+                    onClick={() => {logout(); startNewChat()}}
                 >
                     Выйти
                 </Button>
