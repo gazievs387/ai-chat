@@ -2,7 +2,7 @@ import axios from "axios"
 import { updateLoginContext } from "shared/model/utils/updateAuthContext"
 
 
-const baseURL = "http://localhost:3001/"
+export const baseURL = process.env.API || "http://localhost:3001/"
 
 const api = axios.create({
     baseURL: baseURL

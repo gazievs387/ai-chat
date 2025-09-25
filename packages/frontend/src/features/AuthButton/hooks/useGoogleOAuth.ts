@@ -1,5 +1,6 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import { baseURL } from 'shared/api/api';
 import { useAuth } from 'shared/hooks/useAuth';
 
 
@@ -19,7 +20,7 @@ export function useGoogleOAuth(params?: {onSuccess?: Function, onError?: Functio
         onSuccess: async (codeResponse) => {
             const data = {code: codeResponse.code}
 
-            axios.post<ILoginData>("http://localhost:3001/auth", data)
+            axios.post<ILoginData>(baseURL + "auth", data)
             
             .then((response) => {
                 const {accessToken, refreshToken} = response.data
