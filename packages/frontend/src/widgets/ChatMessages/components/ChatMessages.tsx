@@ -98,8 +98,7 @@ export function ChatMessages() {
                     id="prototype-warn"
                 >
                     <Box sx={{display: "flex", flexDirection: "column", gap: 1}}>
-                        AI Chat всего лишь прототип, поэтому для ответов используется бесплатный gemini api, который имеет ограничения по скорости и количеству запросов 
-                        
+                        AI Chat всего лишь прототип, поэтому для ответов используется бесплатный gemini api, который имеет ограничения по скорости, количеству запросов и региону
                         <Link 
                             style={{color: blueMain, textDecoration: "none"}} 
                             to={"https://ai.google.dev/gemini-api/docs/rate-limits#current-rate-limits"} 

@@ -83,9 +83,7 @@ export async function sendMessage(req: AuthRequest<any, any, {message: string, p
             }
         }
 
-        setTimeout(() => {
-            res.json(response);
-        }, 500);
+        res.json(response);
 
     } catch (error) {
         const [status, json] = handleSendMessageError(error)

@@ -19,7 +19,7 @@ interface ChatMessagesContext {
 }
 
 export const ChatMessages = createContext<ChatMessagesContext>({
-    model: "gemini-2.5-flash",
+    model: "standard",
     setModel: () => {},
     chatId: undefined,
     setChatId: () => {},
