@@ -5,7 +5,7 @@ import { MessageType } from '@ai_chat/types';
 
 
 export function ChatMessagesProvider({children}: PropsWithChildren) {
-    const [model, setModel] = useState('gemini-2.5-flash');
+    const [model, setModel] = useState('standard');
     const [chatId, setChatId] = useState<number | undefined>(undefined)
     const [messages, setMessages] = useState<MessageType[]>([])
     const [loading, setLoading] = useState<boolean>(false)
