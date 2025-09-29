@@ -11,7 +11,7 @@ import { ChatLoadModal } from "features/ChatLoadModal";
 
 
 export function ChatMessages() {
-    const { messages, chatId, loading, error, resend } = useChatMessages() 
+    const { messages, chatId, chatLoading, loading, error, resend } = useChatMessages() 
     const messagesElement = useRef<HTMLElement>(undefined)
 
 
@@ -24,8 +24,8 @@ export function ChatMessages() {
     }, [messages])
 
     useEffect(() => {
-        messagesElement.current?.scrollTo({top: messagesElement.current.scrollHeight, behavior: "instant"})
-    }, [chatId])
+        if (!chatLoading) messagesElement.current?.scrollTo({top: messagesElement.current.scrollHeight, behavior: "instant"})
+    }, [chatLoading])
 
 
     return (
