@@ -24,8 +24,6 @@ export function ErrorHandler({error, retry}: ErrorHandlerProps) {
         errorText = "Данная модель временно недоступна. Повторите позже или используйте другую"
     } else if (error?.response?.data?.code === "LIMIT_EXCEEDED") {
         errorText = "Превышено ограничение запросов к данной модели. Повторите позже или используйте другую"
-    } else if (error?.response?.data?.code === "API_ERROR") {
-        errorText = "Gemini Api недоступен"
     } else {
         errorText = "Произошла ошибка"
     }

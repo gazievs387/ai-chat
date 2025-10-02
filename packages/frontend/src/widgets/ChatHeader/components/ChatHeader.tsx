@@ -29,7 +29,8 @@ export function ChatHeader() {
     const { model, changeModel } = useChatMessages() 
     const isMobile = useIsMobile() 
     const theme = useTheme() 
-    const { setOpen } = useDrawer()
+    const { open, setOpen } = useDrawer()
+ 
 
     const handleChange = (event: SelectChangeEvent) => {
         changeModel(event.target.value as string);
@@ -77,13 +78,6 @@ export function ChatHeader() {
 
                         <MenuItemText>
                             Быстрая и дешевая модель для простых операций
-                        </MenuItemText>
-                    </MenuItem>
-                    <MenuItem  sx={{display: "flex", flexDirection: "column", alignItems: "flex-start"}} value={"standard"}>
-                        <MenuItemHead>Стандартный ответ</MenuItemHead> 
-
-                        <MenuItemText>
-                            Заменитель рабочего api. Если gemini api недоступен в регионе
                         </MenuItemText>
                     </MenuItem>
                 </Select>
