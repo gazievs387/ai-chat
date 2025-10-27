@@ -1,10 +1,10 @@
 import { Box, Button, Typography } from '@mui/material';
 import { ChatsList } from 'entities/ChatsList';
-import { useAuth } from 'shared/hooks/useAuth';
 import { useGetChats } from '../hooks/useGetChats';
 import { LoadIcon } from 'shared/UI/LoadIcon';
 import { ChatType } from '@ai_chat/types';
 import { AxiosError } from 'axios';
+import { useIsLogin } from 'shared/hooks/useIsLogin';
 
 
 interface ChatsProps {
@@ -42,7 +42,7 @@ interface ChatsSectionProps {
 }
 
 export function ChatsSection({open}: ChatsSectionProps) {
-    const { isLogin } = useAuth()
+    const isLogin = useIsLogin()
     const { chats, loading, error, retry } = useGetChats() 
 
 

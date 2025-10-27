@@ -1,7 +1,8 @@
 import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { baseURL } from 'shared/api/api';
-import { useAuth } from 'shared/hooks/useAuth';
+import { useAppDispatch } from 'shared/model';
+import { login } from 'shared/model/slices/auth';
 
 
 interface ILoginData {
@@ -11,7 +12,7 @@ interface ILoginData {
 
 
 export function useGoogleOAuth(params?: {onSuccess?: Function, onError?: Function}): () => void {
-    const { login } = useAuth() 
+    const dispatch = useAppDispatch()
 
 
     const googleLogin = useGoogleLogin({
@@ -25,7 +26,7 @@ export function useGoogleOAuth(params?: {onSuccess?: Function, onError?: Functio
             .then((response) => {
                 const {accessToken, refreshToken} = response.data
 
-                login({accessToken, refreshToken})
+                dispatch(login({accessToken, refreshToken}))
 
                 params?.onSuccess?.()
             })

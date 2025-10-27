@@ -3,7 +3,7 @@ import { LuChevronRight, LuSparkles } from 'react-icons/lu';
 import { Link } from 'react-router';
 
 
-export function Block6() {
+export function CTASection() {
     return (
         <Box
             sx={(t) => ({

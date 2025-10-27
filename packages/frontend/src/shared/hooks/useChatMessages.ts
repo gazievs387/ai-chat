@@ -1,112 +1,92 @@
-import { useCallback, useContext } from "react"
-import { ChatMessages } from "../model/chatMessages"
+import { useCallback } from "react"
 import { isAxiosError } from "axios"
-import { MessageType } from "@ai_chat/types"
-import { useAuth } from "./useAuth"
+import { ChatType, MessageType } from "@ai_chat/types"
 import { api } from "shared/api/api"
-import { ChatsListContext } from "../model/chatsListContext"
-import { useDrawer } from "./useDrawer"
-import { useIsMobile } from "./useIsMobile"
-import { useToast } from "./useToast"
+import { useAppDispatch, useAppSelector } from "shared/model"
+import { addNewMessage, changeModelAction, setChat, setChatLoading, setMsgResponseError, setMsgResponseLoading, startNewChatAction } from "shared/model/slices/chatMessages"
+import { addChat } from "shared/model/slices/chatsList"
 
 
 export function useChatMessages() {
-    const {model, setModel, chatId, setChatId, messages, setMessages, loading, setLoading, chatLoading, setChatLoading, error, setError} = useContext(ChatMessages)
-    const { setChats } = useContext(ChatsListContext)
-    const { access } = useAuth()
-    const isMobile = useIsMobile()
-    const { setOpen } = useDrawer()
-    const toast = useToast()
+    const { messages, model, msgResponseLoading, chatLoading, chatId, error } = useAppSelector(state => state.chatMessages)
+    const dispatch = useAppDispatch()
     
 
-    function startNewChat() {
-        if (isMobile) {
-            setOpen(false)
-        }
+    const startNewChat = useCallback(() => {
+        dispatch(startNewChatAction())
+    }, [])
 
-        setMessages([])
-
-        setChatId(undefined)
-    }
-
-    function changeModel(modeValue: string) {
-        setModel(modeValue);
+    const changeModel = useCallback((modeValue: string) => {
+        dispatch(changeModelAction(modeValue))
 
         startNewChat()
-    };
+    }, [startNewChat])
 
-    async function getChat(chatId: number) {
-        setChatLoading(true)
+    const getChat = useCallback(async (chatId: number) => {
+        dispatch(setChatLoading(true))
 
-        if (isMobile) {
-            setOpen(false)
-        }
-        
         const timeout =  setTimeout(() => {
-            setChatLoading(false)
+            dispatch(setChatLoading(false))
         }, 10000)
 
         try {
-            const response = await api.get("chat/" + chatId)
+            const response = await api.get<{chat: ChatType, messages: MessageType[]}>("chat/" + chatId)
 
-            const { chat, messages } = response.data
-                    
-            setChatId(chat.id)
-            setModel(chat.model)
-            setMessages(messages)
+            const data = response.data
+            
+            dispatch(setChat(data))
         } catch (error) {
-            toast("Не получилось загрузить чат. Попробуйте снова", "error")
+            throw error
         } finally {
             clearTimeout(timeout)
             
-            setChatLoading(false)
+            dispatch(setChatLoading(false))
         }
 
-    }
+    }, [])
 
     const sendMessageRequest = useCallback(async (newMessageText: string, prevMessages: MessageType[]) => {
-        setLoading(true)
+        dispatch(setMsgResponseLoading(true))
 
         try {
-            const response = await api.post("send-message", {message: newMessageText, prevMessages, model, chatId}, {headers: {Authorization: access}})
-
+            const response = await api.post("send-message", {message: newMessageText, prevMessages, model, chatId})
             const responseMessage = response.data.message
-
             const responseChat = response.data.newChat
 
-            if (!chatId && responseChat) {
-                setChatId(responseChat.id)
+            const isNewChat = !chatId && responseChat
 
-                setChats(chats => [responseChat, ...chats])
+            if (isNewChat) {
+                dispatch(addChat(responseChat))
             }
-        
-            setMessages(prevMessages => [...prevMessages, responseMessage]) 
+
+            dispatch(addNewMessage({message: responseMessage, newChat: isNewChat && responseChat}))
         } catch (error) {
             if (isAxiosError(error)) {
-                setError(error)
+                dispatch(setMsgResponseError(error))
             }
             
         } finally {
-            setLoading(false)
+            dispatch(setMsgResponseLoading(false))
         }
     }, [model, chatId])
 
-    const sendMessage = useCallback(async (message: string) => {
-        setMessages(prevMessages => [...prevMessages, {id: Math.random() * 1000000, text: message, role: "user"}]) 
+    const sendMessage = useCallback(async (messageText: string) => {
+        const message: MessageType = {id: Math.random() * 1000000, text: messageText, role: "user"}
+        dispatch(addNewMessage({message}))
 
-        sendMessageRequest(message, messages)
-    }, [messages, error])
+        sendMessageRequest(messageText, messages)
+    }, [messages, sendMessageRequest])
 
 
     const resend = useCallback(async () => {
-        setError(undefined)
+        dispatch(setMsgResponseError(undefined))
 
         const lastMessage = messages[messages.length - 1]
 
         sendMessageRequest(lastMessage.text, messages)
-    }, [messages])
+    }, [messages, sendMessageRequest])
 
 
 
-    return {model, changeModel, setChatLoading, chatId, startNewChat, getChat, messages, sendMessage, resend, loading, chatLoading, error}
+    return {model, changeModel, setChatLoading, chatId, startNewChat, getChat, messages, sendMessage, resend, msgResponseLoading, chatLoading, error}
 }

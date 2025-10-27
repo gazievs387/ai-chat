@@ -11,7 +11,7 @@ import { ChatLoadModal } from "features/ChatLoadModal";
 
 
 export function ChatMessages() {
-    const { messages, chatId, chatLoading, loading, error, resend } = useChatMessages() 
+    const { messages, chatId, chatLoading, msgResponseLoading, error, resend } = useChatMessages() 
     const messagesElement = useRef<HTMLElement>(undefined)
 
 
@@ -64,7 +64,7 @@ export function ChatMessages() {
                 ))}
 
                 
-                {loading && <LoadIcon sx={{mt: 2, mb: 8}} />}
+                {msgResponseLoading && <LoadIcon sx={{mt: 2, mb: 8}} />}
 
                 <ErrorHandler error={error} retry={resend} />
             </Box> 
@@ -98,7 +98,7 @@ export function ChatMessages() {
                     id="prototype-warn"
                 >
                     <Box sx={{display: "flex", flexDirection: "column", gap: 1}}>
-                        AI Chat всего лишь прототип, поэтому для ответов используется бесплатный gemini api, который имеет ограничения по скорости, количеству запросов и региону
+                        AI Chat всего лишь прототип, поэтому для ответов используется бесплатный gemini api, который имеет ограничения по скорости и количеству запросов
                         <Link 
                             style={{color: blueMain, textDecoration: "none"}} 
                             to={"https://ai.google.dev/gemini-api/docs/rate-limits#current-rate-limits"} 

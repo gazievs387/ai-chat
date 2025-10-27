@@ -10,6 +10,9 @@ import { useChatMessages } from 'shared/hooks/useChatMessages';
 import { useIsMobile } from 'shared/hooks/useIsMobile';
 import { AuthButton } from 'features/AuthButton';
 import { useDrawer } from 'shared/hooks/useDrawer';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { toggleDrawer } from 'shared/model/slices/drawer';
 
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -25,15 +28,24 @@ export function ChatDrawer() {
     const { startNewChat } = useChatMessages()
     const isMobile = useIsMobile()
     const {open, setOpen} = useDrawer()
+    const dispatch = useDispatch()
 
+
+    const startNewChatOnClick = useCallback(() => {
+        if (isMobile) {
+            dispatch(toggleDrawer({value: false}))
+        }
+
+        startNewChat()
+    }, [isMobile, startNewChat])
      
-    const handleDrawerOpen = () => {
+    const handleDrawerOpen = useCallback(() => {
         setOpen(true);
-    };
+    }, [])
     
-    const handleDrawerClose = () => {
+    const handleDrawerClose = useCallback(() => {
         setOpen(false);
-    };
+    }, [])
 
     
     return (
@@ -55,7 +67,7 @@ export function ChatDrawer() {
             </DrawerHeader>
 
             <List>
-                <Item onClick={startNewChat} text="Новый чат" Icon={HiOutlinePencilAlt} open={open} />
+                <Item onClick={startNewChatOnClick} text="Новый чат" Icon={HiOutlinePencilAlt} open={open} />
             </List>
 
             <ChatsSection open={open} />

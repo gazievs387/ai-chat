@@ -4,10 +4,10 @@ import ThemeBtn from './ThemeBtn';
 import { Button, Typography, useMediaQuery } from '@mui/material';
 import { Logo } from 'shared/UI/Logo';
 import { LuMenu, LuX } from "react-icons/lu";
-import { useIsDark } from "shared/model/themeContext";
 import { darkBgMain, lightBgWhite } from "shared/static/styles/base";
 import { Link } from "react-router-dom";
 import { HashLink  } from "react-router-hash-link";
+import { useThemeValue } from "shared/hooks/useThemeValue";
 
 
 function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
@@ -53,8 +53,9 @@ function NavItems({isMobile, open}: {isMobile?: boolean, open?: boolean}) {
 
 
 function OpenMenuBtn({open, setIsOpen}: {open: boolean, setIsOpen: Dispatch<SetStateAction<boolean>>}) {
-    const isDark = useIsDark() 
+    const { isDark } = useThemeValue()
     const color = isDark ? lightBgWhite : darkBgMain
+
 
     if (open) {
         return (

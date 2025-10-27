@@ -1,16 +1,18 @@
 import { ChatType } from "@ai_chat/types";
 import { AxiosError, isAxiosError } from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "shared/api/api";
-import { useAuth } from "shared/hooks/useAuth";
-import { ChatsListContext } from "shared/model/chatsListContext";
+import { useIsLogin } from "shared/hooks/useIsLogin";
+import { useAppDispatch, useAppSelector } from "shared/model";
+import { setChats } from "shared/model/slices/chatsList";
 
 
 export function useGetChats() {
-    const { isLogin } = useAuth()
-    const { chats, setChats } = useContext(ChatsListContext)
+    const isLogin = useIsLogin()
+    const chats = useAppSelector(state => state.chatsList.chats)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<AxiosError | undefined>(undefined)
+    const dispatch = useAppDispatch()
 
 
     async function getChats() {
@@ -26,7 +28,7 @@ export function useGetChats() {
         try {
             const response = await api.get<ChatType[]>("chats")
 
-            setChats(response.data)
+            dispatch(setChats(response.data))
         } catch (error) {
             if (isAxiosError(error)) {
                 setError(error)

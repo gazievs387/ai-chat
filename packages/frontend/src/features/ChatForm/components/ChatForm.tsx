@@ -6,13 +6,13 @@ import { useChatMessages } from 'shared/hooks/useChatMessages';
 
 
 export function ChatForm() {
-    const { sendMessage, error, loading } = useChatMessages() 
+    const { sendMessage, error, msgResponseLoading } = useChatMessages() 
     const [text, setText] = useState("")
     const theme = useTheme() 
 
 
     function handleMessage() {
-        if (error || loading) return 
+        if (error || msgResponseLoading) return 
 
         if (text.trim()) {
             sendMessage(text)

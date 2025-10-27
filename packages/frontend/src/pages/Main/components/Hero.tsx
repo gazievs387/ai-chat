@@ -2,12 +2,12 @@ import { Box, Button, Chip, Typography, useTheme } from "@mui/material";
 import { BsChevronRight } from "react-icons/bs";
 import { LuSparkles } from "react-icons/lu";
 import { Link } from "react-router";
-import { useIsDark } from "shared/model/themeContext";
+import { useThemeValue } from "shared/hooks/useThemeValue";
 import { ChatMini } from "widgets/ChatMini";
 
 
-export function Block1() {
-    const isDark = useIsDark()
+export function Hero() {
+    const { isDark } = useThemeValue()
     const theme = useTheme()
 
 

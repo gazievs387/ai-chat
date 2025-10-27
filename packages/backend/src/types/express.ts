@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { UserType } from "./chat";
 
 
 export interface AuthRequest<
@@ -8,5 +9,5 @@ export interface AuthRequest<
   ReqQuery = any,
   Locals extends Record<string, any> = Record<string, any>,
 > extends Request<P, ResBody, ReqBody, ReqQuery, Locals> {
-  user?: { id: number; name: string };
+  user?: UserType;
 }

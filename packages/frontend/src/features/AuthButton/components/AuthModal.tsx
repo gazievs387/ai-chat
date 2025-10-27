@@ -2,9 +2,12 @@ import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Typograp
 import { ReactComponent as GoogleIcon } from "shared/static/svgs/google.svg"
 import { useGoogleOAuth } from "../hooks/useGoogleOAuth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useChatMessages } from "shared/hooks/useChatMessages";
 import { useToast } from "shared/hooks/useToast";
+import { useAppDispatch } from "shared/model";
+import { toggleDrawer } from "shared/model/slices/drawer";
+import { useIsMobile } from "shared/hooks/useIsMobile";
 
 
 interface AuthModalProps {
@@ -15,18 +18,27 @@ interface AuthModalProps {
 
 function AuthModalComponent({open, handleClose}: AuthModalProps) {
     const { startNewChat } = useChatMessages() 
+    const isMobile = useIsMobile()
     const toast = useToast()
+    const [error, setError] = useState(false)
+    const dispatch = useAppDispatch()
 
-    function onLoginSuccess() {
+
+    const onLoginSuccess = useCallback(() => {
         handleClose() 
+
+        if (isMobile) {
+            dispatch(toggleDrawer({value: false}))
+        }
 
         startNewChat()
 
         toast("Вход выполнен успешно")
-    }
+    }, [isMobile, handleClose, startNewChat])
 
-    const [error, setError] = useState(false)
-    const googleLogin = useGoogleOAuth({onSuccess: onLoginSuccess, onError: () => setError(true)}) 
+    const onLoginError = useCallback(() => setError(true), [])
+
+    const googleLogin = useGoogleOAuth({onSuccess: onLoginSuccess, onError: onLoginError}) 
 
 
     return (

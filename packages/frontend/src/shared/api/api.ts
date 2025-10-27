@@ -1,5 +1,6 @@
 import axios from "axios"
-import { updateLoginContext } from "shared/model/utils/updateAuthContext"
+import { store } from "shared/model"
+import { logout, updateTokens } from "shared/model/slices/auth"
 
 
 export const baseURL = process.env.API || "http://localhost:3001/"
@@ -27,23 +28,19 @@ api.interceptors.response.use((config) => {
     if (error?.response?.status === 401 && error.config && !error.config._isRetry && (error.response?.data?.code !== "user_inactive")) {
         originalRequest._isRetry = 'true'
         try {
-            const response = await axios.post(baseURL + "token/refresh", {refresh: localStorage.getItem('refresh')});
+            const response = await axios.post<{access: string, refresh: string}>(baseURL + "token/refresh", {refresh: localStorage.getItem('refresh')});
             
             const tokens = response.data
 
             localStorage.setItem("access", tokens.access)
             localStorage.setItem("refresh", tokens.refresh)
 
-            updateLoginContext(true, tokens)
+            store.dispatch(updateTokens(tokens))
             
             return api.request(originalRequest)    
         } catch (error1) { 
             if (error?.response?.status === 401 && error.config && error.config._isRetry) {
-                localStorage.removeItem("login")
-                localStorage.removeItem("access")
-                localStorage.removeItem("refresh")
-
-                updateLoginContext(false, {access: undefined, refresh: undefined})
+                store.dispatch(logout())
             }
         }
     } 

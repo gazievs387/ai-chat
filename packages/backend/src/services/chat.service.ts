@@ -1,7 +1,7 @@
 import { ChatType, MessageType } from "@ai_chat/types";
 import { db } from "../model";
 import { PrismaClient } from "../model/prisma";
-import { MessageData } from "../types/chat";
+import { MessageData, UserType } from "../types/chat";
 
 
 interface ChatData {
@@ -45,9 +45,11 @@ class ChatService {
         return chats
     }
 
-    public async getChatWithMessages(chatId: number): Promise<{ chat: ChatType; messages: MessageType[]; } | undefined> {
+    public async getChatWithMessages(chatId: number, user?: UserType): Promise<{ chat: ChatType; messages: MessageType[]; } | undefined> {
+        if (!user) return undefined
+
         try {
-            const chatQuery = this.db.chat.findUnique({where: {id: chatId}})
+            const chatQuery = this.db.chat.findUnique({where: {id: chatId, userId: user.id}})
 
             const messages = await chatQuery.messages({orderBy: {id: "asc"}, select: {id: true, text: true, role: true}})
 

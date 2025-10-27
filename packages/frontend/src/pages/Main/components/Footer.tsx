@@ -4,7 +4,7 @@ import { LuFacebook, LuInstagram, LuLinkedin, LuTwitter } from 'react-icons/lu';
 import styles from "../styles/Block7.module.scss"
 
 
-export function Block7() {
+export function Footer() {
     return (
         <Box 
             sx={(t) => ({

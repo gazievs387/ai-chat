@@ -4,6 +4,9 @@ import { HiMenu } from 'react-icons/hi';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
 import { useDrawer } from 'shared/hooks/useDrawer';
 import { useIsMobile } from 'shared/hooks/useIsMobile';
+import { useCallback } from 'react';
+import { useAppDispatch } from 'shared/model';
+import { toggleDrawer } from 'shared/model/slices/drawer';
 
 
 const MenuItemHead = styled(Typography)({
@@ -29,12 +32,17 @@ export function ChatHeader() {
     const { model, changeModel } = useChatMessages() 
     const isMobile = useIsMobile() 
     const theme = useTheme() 
-    const { open, setOpen } = useDrawer()
+    const { setOpen } = useDrawer()
+    const dispatch = useAppDispatch()
  
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = useCallback((event: SelectChangeEvent) => {
+        if (isMobile) {
+            dispatch(toggleDrawer({value: false}))
+        }
+
         changeModel(event.target.value as string);
-    };
+    }, [isMobile, changeModel])
  
 
     return (

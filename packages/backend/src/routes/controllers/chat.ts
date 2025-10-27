@@ -1,5 +1,5 @@
 import { MessageType } from "@ai_chat/types";
-import { NextFunction, Response } from "express";
+import { Response } from "express";
 import { isApiError } from "../../types/utils";
 import { AuthRequest } from "../../types/express";
 import { chatService } from "../../services/chat.service";
@@ -103,8 +103,9 @@ export async function getChats(req: AuthRequest, res: Response) {
 
 export async function getChat(req: AuthRequest, res: Response) {
     const chatId = req.params.chatId
+    const user = req.user
 
-    const result = await chatService.getChatWithMessages(Number(chatId))
+    const result = await chatService.getChatWithMessages(Number(chatId), user)
 
     if (!result) {
         return res.status(404).json({message: "Chat is not found"})

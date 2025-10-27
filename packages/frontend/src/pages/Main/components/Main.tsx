@@ -1,11 +1,11 @@
 import { NavigationBar } from 'widgets/NavigationBar';
-import { Block1 } from './Block1';
+import { Hero } from './Hero';
 import { FeaturesBlock } from './FeaturesBlock';
 import { UseCasesBlock } from './UseCasesBlock';
 import { PriceBlock } from './PriceBlock';
 import { QuestionsBlock } from './QuestionsBlock';
-import { Block6 } from './Block6';
-import { Block7 } from './Block7';
+import { CTASection } from './CTASection';
+import { Footer } from './Footer';
 
 
 export function Main() {
@@ -13,7 +13,7 @@ export function Main() {
         <main>
             <NavigationBar />
 
-            <Block1 />
+            <Hero />
 
             <FeaturesBlock />
             
@@ -23,9 +23,9 @@ export function Main() {
             
             <QuestionsBlock />
 
-            <Block6 />
+            <CTASection />
 
-            <Block7 />
+            <Footer />
         </main>
     )
 }

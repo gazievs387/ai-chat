@@ -1,12 +1,12 @@
 import { createTheme, ThemeProvider, useColorScheme } from "@mui/material";
-import { PropsWithChildren, useEffect, useMemo, useState } from "react";
-import { ThemeContext } from "shared/model/themeContext";
+import { PropsWithChildren, useEffect, useMemo } from "react";
 import { blueMain, darkBgMain, darkTextMain, lightBgGray, lightGrayA100, lightBgWhite, lightTextBlack, lightTextGray, darkGrayA100, darkTextGray, darkMainTextContrast, lightMainTextContrast, darkBgGray } from "shared/static/styles/base";
-import { useIsDark } from "shared/model/themeContext";
+import { useAppSelector } from "shared/model";
+import { useThemeValue } from "shared/hooks/useThemeValue";
 
 
 function ThemeController({children}: PropsWithChildren) {
-    const isDark = useIsDark() 
+    const { isDark } = useThemeValue() 
     const {setColorScheme} = useColorScheme()
 
 
@@ -36,9 +36,8 @@ function ThemeController({children}: PropsWithChildren) {
     )
 }
 
-export function AppThemeProvider({children}: PropsWithChildren) {
-    const [appTheme, setAppTheme] = useState<"dark" | "light">(localStorage.getItem("theme") === "dark" ? "dark" : "light")
-    const isDark = appTheme === "dark"
+function AppThemeProvider({children}: PropsWithChildren) {
+    const appTheme = useAppSelector(state => state.theme.theme)
 
 
     const theme = useMemo(() => {
@@ -50,11 +49,6 @@ export function AppThemeProvider({children}: PropsWithChildren) {
                             main: blueMain,
                             contrastText: lightMainTextContrast
                         },
-
-                        // secondary: {
-                        //     main: lightBgGray,
-                        //     contrastText: lightTextBlack
-                        // },
 
                         text: {
                             primary: lightTextBlack,
@@ -253,12 +247,13 @@ export function AppThemeProvider({children}: PropsWithChildren) {
 
     
     return (
-        <ThemeContext.Provider value={{theme: appTheme, setTheme: setAppTheme, isDark: isDark} as any}>
-            <ThemeProvider theme={theme}>
-                <ThemeController>
-                    {children}
-                </ThemeController>
-            </ThemeProvider>
-        </ThemeContext.Provider>
+        <ThemeProvider theme={theme}>
+            <ThemeController>
+                {children}
+            </ThemeController>
+        </ThemeProvider>
     )
 }
+
+
+export default AppThemeProvider;
