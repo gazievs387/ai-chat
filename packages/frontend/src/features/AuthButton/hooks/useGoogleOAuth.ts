@@ -16,7 +16,7 @@ export function useGoogleOAuth(params?: {onSuccess?: Function, onError?: Functio
 
 
     const googleLogin = useGoogleLogin({
-        redirect_uri: "https://aichat.ideasocial.ru",
+        redirect_uri: "https://aichat.gaziev-s.ru",
         flow: 'auth-code',
         onSuccess: async (codeResponse) => {
             const data = {code: codeResponse.code}
