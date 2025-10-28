@@ -1,18 +1,19 @@
-### 🤖 AI Chat Application
+### 🤖 Приложение AI-чата
 
-A simple web-based AI assistant built with a **React** frontend and an **Express.js** backend. This project is a **monorepo**, containing both the client and server code in a single repository.
+Простой веб-ассистент на базе **искусственного интеллекта**, созданный с использованием **React** для фронтенда и **Express.js** для бэкенда. Этот проект представляет собой **монорепозиторий**, содержащий код клиента и сервера в одном репозитории.
 
----
+----------
 
-### 🚀 Technologies Used
+### 🚀 Используемые технологии
 
-* **Frontend:**
-    * **React**
-    * **TypeScript**
-    * **MUI (Material-UI):** A component library for a clean, modern UI.
-    * **Webpack**
-* **Backend:**
-    * **Express.js**
-    * **@google/genai** The official library for working with Google's Generative AI models.
-* **Project Structure:**
-    * **Monorepo:** Both the frontend and backend are managed within a single repository.
+-   **Фронтенд (Frontend):**
+    -   **React**
+    -   **TypeScript**
+    -   **MUI (Material-UI):** Библиотека компонентов
+    -   **Webpack:** Для сборки проекта
+    -   **RTK**
+-   **Бэкенд (Backend):**
+    -   **Express.js**
+    -   **@google/genai:** Официальная библиотека для работы с моделями генеративного ИИ от Google.
+-   **Структура проекта:**
+    -   **Монорепозиторий (Monorepo):** Фронтенд и бэкенд в рамках одного репозитория.
