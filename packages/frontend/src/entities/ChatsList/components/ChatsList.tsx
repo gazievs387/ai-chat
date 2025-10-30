@@ -1,5 +1,5 @@
 import { ChatType } from '@ai_chat/types';
-import { List } from '@mui/material';
+import { List, Typography } from '@mui/material';
 import { ChatItem } from './ChatItem';
 import { useChatMessages } from 'shared/hooks/useChatMessages';
 import { useIsMobile } from 'shared/hooks/useIsMobile';
@@ -29,6 +29,15 @@ export function ChatsList({chats}: ChatsListProps) {
             toast("Не получилось загрузить чат. Попробуйте снова", "error")
         })
     }, [isMobile, getChat])
+
+
+    if (chats && chats.length === 0) {
+        return (
+            <Typography color="textPrimary" sx={{fontSize: 13, textWrap: "wrap", px: 2.5, mt: 1}}>
+                Нет сохраненных чатов
+            </Typography>
+        )
+    }
     
 
     return (
